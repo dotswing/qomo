@@ -1,0 +1,27 @@
+- content_for :content
+  = form_for @user, url: settings_profile_path,  html: {class: 'ui form segment'} do |f|
+    .two.fields
+      .field
+        = f.label :first_name
+        = f.text_field :first_name
+      .field
+        = f.label :last_name
+        = f.text_field :last_name
+
+    .field
+      = f.label :title
+      = f.text_field :title
+
+    .field
+      = f.label :organization
+      = f.text_field :organization
+
+    .field
+      = f.label :location
+      = f.text_field :location
+
+    .field
+      = f.label :homepage
+      = f.url_field :homepage
+
+    = f.submit 'Save', class: 'ui button teal small'

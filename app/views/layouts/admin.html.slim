@@ -1,0 +1,71 @@
+doctype 5
+html
+  head
+    = title_tag
+    = stylesheet_link_tag 'admin/admin'
+    = javascript_include_tag 'admin/admin', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  body id="#{controller_name}-#{action_name}"
+    aside#sidebar
+      .header
+        h3 Qomo Admin
+
+      ul.group
+        li Tools
+        li
+          a class=active_class('admin/tools-index') href=admin_tools_path
+            | All
+          a class=active_class('admin/tool_groups') href=admin_tool_groups_path
+            | Groups
+          a href='#' Audit
+
+      ul.group
+        li Pipelines
+        li
+          a href=admin_tools_path All
+
+      ul.group
+        li Datastore
+        li
+          a href=admin_tools_path Libraries
+
+      ul.group
+        li Users
+        li
+          a href=admin_users_path Users
+
+      ul.group
+        li System
+        li
+          a href='#' Broadcast
+          a href='#' Telemetry
+          a href=admin_tools_path Jobs
+          a href='#' Trash
+          a href='#' Backup
+
+
+    #main
+      .ui.menu
+        .item
+          .ui.breadcrumb
+            .section Admin
+            .divider
+              | /
+            .section = controller_name.humanize
+            .divider
+              | /
+            .section = action_name.humanize
+
+        = yield :toolbar
+
+        .menu.right
+          .item
+            i.fa.fa-user.icon
+            = current_user.username
+          a.item href=root_path title='Homepage' data-no-turbolink=true data-position='bottom left'
+            i.fa.fa-long-arrow-left
+
+
+      .content.container-fliud
+        = yield

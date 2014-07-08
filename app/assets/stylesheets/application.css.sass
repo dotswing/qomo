@@ -1,0 +1,76 @@
+//= require jquery-layout
+//= require_directory .
+
+@import shared/common
+
+$header-height: 39px
+$panel-border: solid #AAA 1px
+
+#header
+  @include position(absolute 0 0 null 0)
+  border-radius: 0
+  .active
+    color: #00B5AD !important
+    background-color: #424242
+    box-shadow: 0em 0.2em 0em inset !important
+  .center
+    display: inline-block
+    position: absolute
+    left: 30%
+
+
+#main
+  width: 100%
+  position:  absolute
+  top: $header-height
+  bottom: 0
+
+.qpanel
+  height: calc(100% - 2px)
+  border: 1px solid #BBB
+  padding: 0
+  overflow: hidden
+  .header
+    z-index: 5000
+    height: 27px
+    text-shadow: rgba(255,255,255,0.8) 0 1px 0
+    background: #FCFCFC
+    border-bottom: $panel-border
+    margin: 0
+    padding-top: 2px
+    padding-left: 15px
+    padding-right: 15px
+    font-size: 1.1em
+    font-weight: bold
+    color: #555
+    .title
+      display: inline-block
+      margin-top: 3px
+    .buttons
+      button
+        height: 25px
+        line-height: 10px
+        min-height: 0
+        .fa
+          line-height: 10px
+    &.thick
+      height: 30px
+      padding-top: 5px
+      margin-bottom: 30px
+      .toolbar
+        select.form-control
+          width: 100px
+          height: 27px
+          margin-left: 10px
+          display: inline-block
+          font-weight: normal
+        .btn-group
+          margin-right: 30px
+          button
+            height: 27px
+  .content
+    width: 100%
+    height: 100%
+    overflow: auto
+    @include position(absolute, 30px 0 0 0)
+

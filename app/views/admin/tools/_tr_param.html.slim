@@ -1,0 +1,13 @@
+tr
+  td: input type='text' name='tool[params][][name]' value=param['name']
+  td: input type='text' name='tool[params][][label]' value=param['label']
+  td
+    select name='tool[params][][type]'
+      = options_for_select \
+        %w[input string bool single_select mutiple_select path output].map {|e| [e.humanize, e]}, \
+        selected: param['type']
+  td
+    input type='text' name='tool[params][][default_value]' value=param['default_value']
+  td
+    a.icon-button.remove href='javascript:;'
+      i.fa.fa-trash-o

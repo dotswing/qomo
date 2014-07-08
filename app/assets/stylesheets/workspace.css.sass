@@ -1,0 +1,92 @@
+@import bourbon
+
+._jsPlumb_drag_select *
+  @include user-select(none)
+
+$toolbox-padding: 3px 15px
+
+#canvas
+  width: 100%
+  height: 100%
+  background: url(data:image/gif;base64,R0lGODlhFAAUAIAAAMDAwP///yH5BAEAAAEALAAAAAAUABQAAAImhI+pwe3vAJxQ0hssnnq/7jVgmJGfGaGiyoyh68GbjNGXTeEcGxQAOw==)
+  position: relative
+  .toolbox
+    position: absolute
+    color: #222
+    cursor: pointer
+    min-width: 200px
+    background-color: #eeeeef
+    border: 1px solid #346789
+    @include border-top-radius(5px)
+    @include border-bottom-radius(5px)
+    @include border-left-radius(5px)
+    @include border-right-radius(5px)
+    .titlebar
+      padding: $toolbox-padding
+      border-bottom: 1px solid #223133
+      background: #799E00
+      font-size: 1.1em
+      .title
+        float: left
+        font-weight: bold
+      .btn-close
+        float: right
+        font-size: 1em
+        margin-top: 2px
+        color: #555555
+        &:hover
+          color: #222222
+    .params
+      padding: $toolbox-padding
+      .param
+        margin: 6px 0
+        label
+          margin-right: 12px
+        input
+          float: right
+
+.center
+  .pipeline-title
+    display: inline-block
+    margin-left: 20px
+    color: #555555
+  .buttons
+    float: right
+
+.tool-groups
+  .content
+    & > ul
+      list-style: none
+      padding-left: 0
+      margin-top: 0
+      & > li
+        &:first-of-type
+          margin-top: 0
+          h5
+            border-top: 0
+        &:last-of-type
+          h5
+            border-bottom-width: 1px !important
+        & > ul
+          list-style: disc
+          & > li
+            margin: 5px 0
+
+    h5
+      cursor: pointer
+      padding: 5px 15px
+      font-size: 1.1rem
+      margin: 0 0 0 0
+      background-color: #f1f1f1
+      border-top: 1px solid #CCCCCC
+      border-bottom: 1px solid #CCCCCC
+      @include user-select(none)
+
+      i
+        width: 12px
+        margin-right: 12px
+
+    li.panel
+      border-radius: 0
+      margin-bottom: 0
+      border-top: none

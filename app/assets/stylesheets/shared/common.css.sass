@@ -1,0 +1,77 @@
+//= require normalize-css
+//= require font-awesome
+//= require semantic
+//= require chosen
+
+$font-family-base: 14px
+
+$nprogress-color: #00B5AD
+@import nprogress
+
+@import bourbon
+
+html
+  font-size: $font-family-base
+
+input + input, button + button
+  margin-left: 10px
+
+.monospace
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace
+
+.chosen-single
+  background: #ffffff !important
+  box-shadow: none !important
+
+.container
+  max-width: 1200px
+  margin: 0 auto
+
+.container-fliud
+  width: 95%
+  margin: 0 auto
+
+.container-tiny
+  max-width: 740px
+  margin: 0 auto
+
+
+fieldset
+  border: none
+  margin: 0
+  padding: 0
+  legend
+    width: 100%
+    padding-bottom: 15px
+    font-size: 18px
+    line-height: 30px
+    &:after
+      content: ''
+      display: block
+      border-bottom: 1px solid #e5e5e5
+
+.ui.dropdown .menu .item
+  font-size: 1rem !important
+
+table.compact
+  td
+    input
+      padding-top: 3px !important
+      padding-bottom: 3px !important
+
+tr.empty td
+  text-align: center !important
+  line-height: 2.5em
+
+.chosen-container
+  width: 100% !important
+
+.help-inline
+  color: #888888
+  font-size: $font-family-base - 2
+  display: inline-block
+  margin: 0 0 0 10px
+
+.row-selectable
+  tr th:first-of-type
+    width: 20px

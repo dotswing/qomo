@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: qomo
+  host: host2
+
+development:
+  <<: *default
+  database: qomo_development
+
+test:
+  <<: *default
+  database: qomo_test
+
+production:
+  <<: *default
+  database: qomo_production
+  username: qomo
+  password: <%= ENV['QOMO_DATABASE_PASSWORD'] %>

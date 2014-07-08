@@ -1,0 +1,25 @@
+- content_for :content
+  = form_for @user, url: settings_security_path, html: { method: :put, class: 'ui form segment' } do |f|
+
+    .field
+      = f.label :email
+      = f.email_field :email, autofocus: true
+
+    .field
+      = f.label :password
+      i
+        | (leave blank if you don't want to change it)
+      = f.password_field :password, autocomplete: "off"
+
+    .field
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, autocomplete: "off"
+
+    .field
+      = f.label :current_password
+      i
+        | (we need your current password to confirm your changes)
+      = f.password_field :current_password, autocomplete: "off"
+
+    = f.submit 'Save', class: 'ui button teal small'
+

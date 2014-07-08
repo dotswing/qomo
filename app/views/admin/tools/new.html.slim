@@ -1,0 +1,94 @@
+- content_for :toolbar
+  .item
+    button.ui.button.teal.save-tool
+      | Save
+
+  .item
+    button.ui.button.teal
+      | Import from zip
+
+= form_for [:admin, @tool], html: {id: 'form-tool', class: 'ui form grid segment'} do |f|
+  .seven.wide.column
+    fieldset
+      legend Basic
+      .field
+        = f.label :name
+        = f.text_field :name, class: 'uk-width-1-1', autocomplete: 'false', placeholder: 'An unique short name'
+
+      .field
+        = f.label :title
+        = f.text_field :title, class: 'uk-width-1-1', placeholder: 'Human friendly name'
+
+      .field
+        = f.label :contributors
+        input.uk-width-1-1 type='text' placeholder='Multiple contributors may be seperated by semicolon'
+
+      .field
+        = f.label :group
+        = f.collection_select :group_id, @groups, :id, :title, {}, {class: 'chosen uk-width-1-1'}
+
+      .field
+        = f.label :status
+        = f.select :status, {}, {}, class: 'chosen uk-width-1-1'
+          = options_for_select(Tool.statuses.collect { |s| [s[0].humanize, s[0]] }, selected: @tool.status)
+
+      fieldset
+        legend Attachments
+        #uploader
+          i.fa.fa-cloud-upload
+          '  Dropthem here or
+          a.uk-form-file
+            | select one
+            input type='file'
+            | .
+
+        table.ui.table.compact.segment
+          tr
+            th File Name
+            th Size
+          tr
+            td PL01992.jar
+            td
+              | 1.56MB
+              a.icon-button.remove href='javascript:;'
+                i.fa.fa-trash-o
+          tr
+            td PL0199asdasdasdasdas2.jar
+            td
+              | 1.56MB
+              a.icon-button.remove href='javascript:;'
+                i.fa.fa-trash-o
+
+  .nine.wide.column
+    fieldset
+      legend
+        | Advantage
+
+      .field
+        ' Parameters
+        a.icon-button.add-param href='javascript:;' data-no-turbolink=true : i.fa.fa-plus
+        table.ui.table.compact.segment
+          tr
+            th Param Name
+            th Param Label
+            th Type
+            th Default
+            th Operations
+          - if @tool.params
+            - for param in @tool.params
+              = render 'tr_param', param: param
+          - else
+            tr.empty
+              td colspan=5
+                | Empty
+
+      .field
+        = f.label :command
+        = f.text_field :command, spellcheck: 'false', class: 'uk-width-1-1 monospace', placeholder: '#{hadoop_jar} JARFILE MAINCLASS #{input} #{PARAM_NAME} #{output}'
+
+      .field
+        = f.label :usage
+        = f.text_area :usage, class: 'uk-width-1-1', placeholder: 'Details about this tool. References are recommended to be included.'
+
+script#tpl_tr_param type='text/html'
+  = render partial: 'tr_param', locals: {param: {}}

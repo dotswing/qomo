@@ -1,0 +1,85 @@
+//= require_directory .
+
+@import ../shared/common
+
+
+$header-height: 42px
+$sidebar-width: 170px
+
+body
+  background: #efefef
+
+a.icon-button
+  color: green
+  font-size: $font-family-base
+  &:hover
+    color: darkgreen
+
+  &.remove
+    color: red
+    font-size: 16px
+    margin-left: 12px
+
+table.celled
+  thead
+    th
+      border-top-width: 0 !important
+  tfoot
+    th
+      border-bottom-width: 0 !important
+
+#sidebar
+  background: #304269
+  width: $sidebar-width
+  height: 100%
+  box-sizing: border-box
+  z-index: 1
+  @include position(fixed, 0px null 0px 0)
+  @include transition(all 0.3s ease)
+  .header
+    background: #283758
+    overflow: hidden
+    height: $header-height
+    h3
+      margin: 8px 0 0 20px
+      color: #fff
+      float: left
+      font-size: 1.5em
+  ul.group
+    list-style: none
+    margin: 10px 0
+    padding: 0
+    li
+      font-size: 12px
+      position: relative
+      line-height: 42px
+      &:first-of-type
+        color: #627cb7
+        text-indent: 20px
+      a
+        font-size: 15px
+        font-weight: bold
+        display: block
+        color: #b2bfdc
+        padding: 0 20px
+        &.active, &:hover
+          background: #283758
+          box-shadow: inset 3px 0 0 #5edb99
+          text-decoration: none
+          color: #fff
+
+#main
+  padding-left: $sidebar-width
+  float: left
+  position: relative
+  width: 100%
+  box-sizing: border-box
+  @include transition(all 0.3s ease)
+  .breadcrumb
+    font-weight: bold
+  .menu
+    form
+      padding-top: 5px
+      padding-bottom: 5px
+  .content
+    margin-top: 20px

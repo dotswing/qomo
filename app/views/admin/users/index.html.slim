@@ -1,0 +1,30 @@
+- content_for :toolbar
+  .item
+    button.ui.button.teal.tiny Delete
+  .item
+    button.ui.button.teal.tiny Delete
+  .item
+    button.ui.button.red.tiny Lock
+  .item
+    button.ui.button.red.tiny Delete
+
+
+.container-fliud
+  table.ui.table.segment.celled.row-selectable
+    thead
+      th: input type='checkbox'
+      th Username
+      th Email
+      th Last Sing in IP
+      th Last Sign at
+      th Lock
+
+    tbody
+      - for user in @users
+        tr
+          td: input type='checkbox'
+          td = user.username
+          td = user.email
+          td = user.last_sign_in_ip
+          td = user.current_sign_in_at.to_formatted_s(:db)
+          td = check_box_tag user, :locked

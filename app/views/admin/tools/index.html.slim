@@ -1,0 +1,40 @@
+- content_for :toolbar
+  .item
+    a.ui.button.teal href=new_admin_tool_path
+      | New
+  .item
+    a.ui.button.red.btn-row-selectable href=delete_admin_tools_path data-rowselectable='table.tools'
+      | Delete
+
+table.ui.table.celled.segment.padded.tools.row-selectable
+  thead
+    tr
+      th: input type='checkbox'
+      th Name
+      th Title
+      th Group
+      th Status
+      th Contributorr
+      th Operations
+
+  tfoot
+    tr
+      th colspan=7 Totoal: #{@tools.length}
+
+  tbody
+    - if @tools.length == 0
+      tr.empty
+        td colspan=7 Empty
+    - else
+      - for tool in @tools
+        tr data-row-id=tool.id
+          td: input type='checkbox'
+          td
+            a href=edit_admin_tool_path(tool) = tool.name
+          td = tool.title
+          td = tool.group.title
+          td = tool.status
+          td = tool.contributor
+          td
+            a href=admin_tool_path(tool) data-method='delete'
+              i.fa.fa-trash-o
