@@ -18,8 +18,18 @@ module ApplicationHelper
   end
 
   def title_tag
-    c = (params[:controller].split('/').map {|e| e.humanize}).join ' » '
-    title = @page_title ? "Qomo | #{@page_title}" : "Qomo | #{c}"
+    if @page_title
+      title = @page_title
+    else
+      title = params[:controller].split('/')
+    end
+
+    if title.kind_of? Array
+      title = (title.map {|e| e.humanize}).join ' » '
+    end
+
+    title = "Qomo | #{title}"
+
     content_tag 'title', title
   end
 

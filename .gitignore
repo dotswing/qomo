@@ -7,4 +7,6 @@
 /tmp
 
 /vendor/assets/components
+
 .idea
+.DS_store
