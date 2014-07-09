@@ -11,17 +11,14 @@
   .seven.wide.column
     fieldset
       legend Basic
-      .field
-        = f.label :name
-        = f.text_field :name, class: 'uk-width-1-1', autocomplete: 'false', placeholder: 'An unique short name'
 
       .field
         = f.label :title
         = f.text_field :title, class: 'uk-width-1-1', placeholder: 'Human friendly name'
 
       .field
-        = f.label :contributors
-        input.uk-width-1-1 type='text' placeholder='Multiple contributors may be seperated by semicolon'
+        = f.label :contributor
+        = f.text_field :contributor, class: 'uk-width-1-1', placeholder: 'Multiple contributors may be seperated by semicolon'
 
       .field
         = f.label :group
@@ -46,18 +43,14 @@
           tr
             th File Name
             th Size
-          tr
-            td PL01992.jar
-            td
-              | 1.56MB
-              a.icon-button.remove href='javascript:;'
-                i.fa.fa-trash-o
-          tr
-            td PL0199asdasdasdasdas2.jar
-            td
-              | 1.56MB
-              a.icon-button.remove href='javascript:;'
-                i.fa.fa-trash-o
+
+          - for file in @tool.files
+            tr
+              td = file[:name]
+              td
+                = number_to_human_size(file [:size])
+                a.icon-button.remove href='javascript:;'
+                  i.fa.fa-trash-o
 
   .nine.wide.column
     fieldset

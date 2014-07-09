@@ -1,0 +1,11 @@
+defaults: &defaults
+  home: /var/qomo
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -1,23 +1,25 @@
 ActiveRecord::Schema.define(version: 20140413104534) do
+  enable_extension 'uuid-ossp'
 
-  create_table :tools, force: true do |t|
-    t.string :name, null: false
+  create_table :tools, id: :uuid do |t|
     t.string :title, null: false
     t.string :contributor
-    t.belongs_to :group, index: true
+    t.uuid :group_id, index: true
     t.text :command
     t.text :params
     t.text :usage
 
     t.integer :status, default: 0
 
+    t.string :dirname
+
     t.timestamps
   end
 
-  add_index :tools, [:name, :title], unique: true
+  add_index :tools, [:title], unique: true
 
 
-  create_table :tool_groups, force: true do |t|
+  create_table :tool_groups, id: :uuid do |t|
     t.string :title, null: false
 
     t.timestamps
@@ -26,9 +28,10 @@ ActiveRecord::Schema.define(version: 20140413104534) do
   add_index :tool_groups, [:title], unique: true
 
 
-  create_table :pipelines do |t|
-    t.belongs_to :owner, class: 'User'
+  create_table :pipelines, id: :uuid do |t|
+    t.uuid :owner_id
 
+    t.string :pid
     t.string :title
     t.text :desc
     t.text :content
@@ -39,7 +42,7 @@ ActiveRecord::Schema.define(version: 20140413104534) do
   end
 
 
-  create_table :users do |t|
+  create_table :users, id: :uuid do |t|
     t.string :username, null: false
 
     t.string :first_name

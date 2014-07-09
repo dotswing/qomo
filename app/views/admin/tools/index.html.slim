@@ -10,7 +10,6 @@ table.ui.table.celled.segment.padded.tools.row-selectable
   thead
     tr
       th: input type='checkbox'
-      th Name
       th Title
       th Group
       th Status
@@ -30,8 +29,7 @@ table.ui.table.celled.segment.padded.tools.row-selectable
         tr data-row-id=tool.id
           td: input type='checkbox'
           td
-            a href=edit_admin_tool_path(tool) = tool.name
-          td = tool.title
+            a href=edit_admin_tool_path(tool) = tool.title
           td = tool.group.title
           td = tool.status
           td = tool.contributor

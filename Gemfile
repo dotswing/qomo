@@ -27,6 +27,7 @@ gem 'puma'
 
 # Misc
 gem 'settingslogic'
+gem 'redcarpet'
 
 group :development do
   gem 'spring'
