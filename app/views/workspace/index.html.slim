@@ -3,54 +3,17 @@
     .title Tools
 
   .content
-    ul
-      li
-        h5
-          i.fa.fa-folder-open
-          | Differential expression analysis
-        ul
-          li
-            a.tool-link href=box_tool_path('cc89115f-2a85-4978-a28d-af90c64de907')
-              | DEGseq
-          li
-            | Expression calculation
+    - for group in @groups
+      ul
+        li
+          h5
+            i.fa.fa-folder-open
+            = group.title
+          ul
+            - for tool in group.tools
+              li
+                a.tool-link href=box_tool_path(tool) = tool.title
 
-      li
-        h5
-          i.fa.fa-folder-open
-          | Format conversion
-        ul
-          li
-            a.tool-link href=box_tool_path(1) data-no-turbolink=true
-              | FASTA to SFA
-          li Newick to Phyloxml
-          li SAM to BED
-
-      li
-        h5
-          i.fa.fa-folder-open
-          | Alignment
-        ul
-          li BLAST
-          li Make BLAST database
-
-      li
-        h5
-          i.fa.fa-folder-open
-          | Table process
-        ul
-          li Sort by column
-          li Join
-          li Line transformation
-          li AWK
-          li Line filter
-      li
-        h5
-          i.fa.fa-folder-open
-          | Alignment
-        ul
-          li BLAST
-          li Make BLAST database
 
 
 
