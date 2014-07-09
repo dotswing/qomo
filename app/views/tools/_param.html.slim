@@ -1,0 +1,10 @@
+.param
+  label = param['label']
+  - case param['type']
+    - when 'string'
+    input type='text' name=param['name']
+
+    - when 'path'
+    input type='text' name=param['name']
+
+  .clearfix

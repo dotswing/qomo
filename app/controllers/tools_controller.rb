@@ -4,16 +4,7 @@ class ToolsController < ApplicationController
 
 
   def box
-    @tool = {
-        id: SecureRandom.uuid,
-        spec_id: 'awk',
-        title: 'Awk',
-        input: {id: 'input', label: 'Input', format: 'txt'},
-        output: {id: 'output', label: 'Output', format: 'txt'},
-        params: [
-            {type: 'string', id: 'exp', label: 'Expression'}
-        ]
-    }
+    @tool = Tool.find params['id']
 
     render 'box', layout: nil
   end

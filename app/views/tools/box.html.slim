@@ -1,30 +1,23 @@
-.toolbox id=@tool[:id]
+.toolbox id=@tool.id
   .titlebar
-    .title = @tool[:title]
+    .title = @tool.title
     .btn-close
       i.fa.fa-times
     .clearfix
 
   .params
-    .input.param
-      label
-        = @tool[:input][:label]
-      input type='text' name=@tool[:input][:id]
-      .clearfix
-
-    - for param in @tool[:params]
-      .param
+    - for input in @tool.inputs
+      .input.param
         label
-          = param[:label]
-        - case param[:type]
-          - when 'string'
-          input type='text' name=param[:id]
-          - when 'path'
-          input type='text' name=param[:id]
+          = input['label']
+        input type='text' name=input['name']
         .clearfix
+
+    - for param in @tool.normal_params
+      = render partial: 'param', locals: {param: param}
 
     .output.param
       label
-        = @tool[:output][:label]
-      input type='text' name=@tool[:output][:id]
+        = @tool.output['label']
+      input type='text' name=@tool.output['name']
       .clearfix

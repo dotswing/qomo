@@ -7,9 +7,24 @@ class Tool < ActiveRecord::Base
       active: 1
   }
 
+  belongs_to :owner, class_name: 'User'
   belongs_to :group, class_name: 'ToolGroup'
 
   serialize :params, JSON
+
+
+  def inputs
+    self.params.select {|k| k['type'].downcase == 'input'}
+  end
+
+
+  def output
+    (self.params.select {|k| k['type'].downcase == 'output'})[0]
+  end
+
+  def normal_params
+    self.params.reject {|k| ['input', 'output'].include? k['type'].downcase }
+  end
 
 
   def files

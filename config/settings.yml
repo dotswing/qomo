@@ -1,6 +1,6 @@
 defaults: &defaults
   home: /var/qomo
-  admin:
+  root:
     username: dotswing
     email: dotswing@gmail.com
 

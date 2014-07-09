@@ -4,6 +4,7 @@ ActiveRecord::Schema.define(version: 20140413104534) do
   create_table :tools, id: :uuid do |t|
     t.string :title, null: false
     t.string :contributor
+    t.uuid :owner_id, index: true
     t.uuid :group_id, index: true
     t.text :command
     t.text :params

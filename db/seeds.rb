@@ -19,6 +19,8 @@ def try_load_tools(dir)
 
       tool.dirname = File.basename dir
 
+      tool.owner = User.find_by_username Settings.root.username
+
       params = []
 
       for p in t['params']
