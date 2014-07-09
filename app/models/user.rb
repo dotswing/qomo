@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :pipelines
 
+
   def full_name?
     not (first_name.blank? and last_name.blank?)
   end
@@ -14,6 +15,11 @@ class User < ActiveRecord::Base
 
   def full_name
     [first_name, last_name].join ' '
+  end
+
+
+  def admin!
+    self.admin = true
   end
 
 

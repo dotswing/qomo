@@ -8,5 +8,8 @@
 
 /vendor/assets/components
 
+/config/settings.yml
+/config/database.yml
+
 .idea
 .DS_store
