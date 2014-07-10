@@ -5,16 +5,19 @@ within 'tools', ->
     $tr_empty = $(this).parents('fieldset').find('table tr.empty')
     if $tr_empty.length > 0
       $tr_empty.remove()
-    $(this).parents('fieldset').find('table').append tpl_tr_param
+    $(this).parents('fieldset').find('table.params > tbody').append tpl_tr_param
 
-  $('.params .remove').click ->
+
+  $(document).on 'click', '.params .remove', ->
     $(this).parents('tr').remove()
+
 
   $('.save-tool').click ->
     $form = $('#form-tool')
     $form.submit()
 
-  $('.params .edit-options').click ->
+
+  $(document).on 'click', '.params .edit-options', ->
     $options = $(this).parents('tr').find('.options')
 
 
@@ -22,8 +25,6 @@ within 'tools', ->
     width = $(this).outerWidth()
     height = $(this).outerHeight()
     popupWidth   = $options.width()
-
-    console.debug height
 
     $options.css
       top    : offset.top + height + 1
@@ -33,6 +34,12 @@ within 'tools', ->
 
     $options.show()
 
-  $('.params .options button').click ->
+
+  $(document).on 'click', '.params .options button', ->
     $(this).parents('.options').hide()
     return false
+
+
+  $(document).on 'change', 'select[name="tool[params][][type]"]', ->
+    $(this).parents('td').next().html $("#tpl_param_#{this.value}").text()
+

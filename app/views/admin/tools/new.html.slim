@@ -90,4 +90,8 @@
 
 
 script#tpl_tr_param type='text/html'
-  = render partial: 'tr_param', locals: {param: {}}
+  = render partial: 'tr_param', locals: {param: {'type' => 'string'}}
+
+- for type in %w[input string bool select path output]
+  script id="tpl_param_#{type}" type='text/html'
+    = render partial: "param_#{type}", locals: {param: {'type' => type}}
