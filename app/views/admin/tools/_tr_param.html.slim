@@ -4,10 +4,37 @@ tr
   td
     select name='tool[params][][type]'
       = options_for_select \
-        %w[input string bool single_select mutiple_select path output].map {|e| [e.humanize, e]}, \
+        %w[input string bool select path output].map {|e| [e.humanize, e]}, \
         selected: param['type']
   td
-    input type='text' name='tool[params][][default_value]' value=param['default_value']
+    - if param['type'] == 'select'
+      ' Multiple:
+      input type='checkbox' name='tool[params][][multiple]' checked=param['multiple']
+      a.edit-options href='javascript:;' Edit Options
+      .options.ui.popup.bottom.center.transition.visible
+        table.ui.table.compact.segment
+          thead
+            tr
+              th Label
+              th Value
+              th Selected
+          tbody
+            - for o in param['options']
+              tr
+                td
+                  input type='text' name='tool[params][][options][][label]' value=o['label']
+                td
+                  input type='text' name='tool[params][][options][][value]' value=o['value']
+                td
+                  input type='checkbox' name='tool[params][][options][][selected]' checked=o['selected']
+
+          tfoot
+            tr
+              td colspan=3
+                button.ui.button.teal.tiny OK
+
+    - else
+      input type='text' name='tool[params][][default_value]' value=param['value']
   td
     a.icon-button.remove href='javascript:;'
       i.fa.fa-trash-o

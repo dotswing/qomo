@@ -60,13 +60,18 @@
       .field
         ' Parameters
         a.icon-button.add-param href='javascript:;' data-no-turbolink=true : i.fa.fa-plus
-        table.ui.table.compact.segment
+        table.ui.table.compact.segment.params
           tr
-            th Param Name
-            th Param Label
-            th Type
-            th Default
-            th Operations
+            th width='100px'
+              | Param Name
+            th width='140px'
+              | Param Label
+            th width='70px'
+              | Type
+            th
+              | Values / Definition
+            th width='50px'
+
           - if @tool.params
             - for param in @tool.params
               = render 'tr_param', param: param
@@ -82,6 +87,7 @@
       .field
         = f.label :usage
         = f.text_area :usage, class: 'uk-width-1-1', placeholder: 'Details about this tool. References are recommended to be included.'
+
 
 script#tpl_tr_param type='text/html'
   = render partial: 'tr_param', locals: {param: {}}

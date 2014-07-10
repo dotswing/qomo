@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+
+  def s2b(str)
+    str == 'true' or str == true
+  end
+
+
   def controller?(*controller)
     controller.include?(params[:controller])
   end

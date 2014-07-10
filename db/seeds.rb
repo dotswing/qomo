@@ -33,10 +33,18 @@ def try_load_tools(dir)
         if param['type'] == 'select'
           param['options'] = p[1]['option']
 
-          if t['multi'] == 'true'
-            param['multi'] = true
+          for o in param['options']
+            if o['selected'] == 'true'
+              o['selected'] = true
+            else
+              o['selected'] = false
+            end
+          end
+
+          if p[1]['multiple'] == 'true'
+            param['multiple'] = true
           else
-            param['multi'] = false
+            param['multiple'] = false
           end
         end
 

@@ -13,3 +13,26 @@ within 'tools', ->
   $('.save-tool').click ->
     $form = $('#form-tool')
     $form.submit()
+
+  $('.params .edit-options').click ->
+    $options = $(this).parents('tr').find('.options')
+
+
+    offset = $(this).position()
+    width = $(this).outerWidth()
+    height = $(this).outerHeight()
+    popupWidth   = $options.width()
+
+    console.debug height
+
+    $options.css
+      top    : offset.top + height + 1
+      left   : offset.left + (width / 2) - (popupWidth / 2) + 1
+      bottom : 'auto'
+      right  : 'auto'
+
+    $options.show()
+
+  $('.params .options button').click ->
+    $(this).parents('.options').hide()
+    return false
