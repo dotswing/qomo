@@ -1,10 +1,13 @@
-.param
-  label = param['label']
+tr.param
+  td: label = param['label']
   - case param['type']
     - when 'string'
-    input type='text' name=param['name']
+    td: input type='text' name=param['name']
 
     - when 'path'
-    input type='text' name=param['name']
+    td: input type='text' name=param['name']
 
-  .clearfix
+    - when 'select'
+    td: select.chosen name=param['name']
+      = options_for_select param['options'].map {|e| [e['label'], e['value']]}, \
+                           param['options'].select {|e| e['selected'] == 'true'}

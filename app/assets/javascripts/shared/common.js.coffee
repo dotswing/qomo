@@ -1,5 +1,6 @@
 #= require jquery-tablesort
 #= require semantic
+#= require jquery-livequery
 
 window.App =
   scopes: {}
@@ -25,7 +26,8 @@ readyFn = ->
   App.scopes[bodyId]() if App.scopes[bodyId]
   App.scopes[controller]() if App.scopes[controller]
 
-  $('.chosen').chosen()
+  $('.chosen').livequery ->
+    $(this).chosen()
 
   $('table.row-selectable tr th:first-of-type input[type=checkbox]').click ->
     checked = this.checked

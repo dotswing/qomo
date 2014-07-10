@@ -5,19 +5,15 @@
       i.fa.fa-times
     .clearfix
 
-  .params
+  table.params
     - for input in @tool.inputs
-      .input.param
-        label
-          = input['label']
-        input type='text' name=input['name']
-        .clearfix
+      tr.param
+        td: label = input['label']
+        td: input type='text' name=input['name']
 
     - for param in @tool.normal_params
       = render partial: 'param', locals: {param: param}
 
-    .output.param
-      label
-        = @tool.output['label']
-      input type='text' name=@tool.output['name']
-      .clearfix
+    tr.output.param
+      td: label = @tool.output['label']
+      td: input type='text' name=@tool.output['name']

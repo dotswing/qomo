@@ -10,6 +10,7 @@ $toolbox-padding: 3px 15px
   height: 100%
   background: url(data:image/gif;base64,R0lGODlhFAAUAIAAAMDAwP///yH5BAEAAAEALAAAAAAUABQAAAImhI+pwe3vAJxQ0hssnnq/7jVgmJGfGaGiyoyh68GbjNGXTeEcGxQAOw==)
   position: relative
+
   .toolbox
     position: absolute
     color: #222
@@ -24,7 +25,7 @@ $toolbox-padding: 3px 15px
     .titlebar
       padding: $toolbox-padding
       border-bottom: 1px solid #223133
-      background: #799E00
+      background: #00B5AD
       font-size: 1.1em
       .title
         float: left
@@ -36,14 +37,20 @@ $toolbox-padding: 3px 15px
         color: #555555
         &:hover
           color: #222222
-    .params
-      padding: $toolbox-padding
-      .param
-        margin: 6px 0
+    table.params
+      font-size: 0.9em
+      margin: 10px
+      tr.param
+        line-height: 28px
         label
           margin-right: 12px
         input
-          float: right
+          @include box-sizing(border-box)
+          padding-left: 8px
+          width: 100%
+          height: 25px
+        .chosen-single
+          border-radius: 0
 
 .center
   .pipeline-title

@@ -10,10 +10,10 @@ vam 'jquery-ujs', github: 'rails/jquery-ujs' do
   local 'src/rails.js', main: true
 end
 
-vam 'toastr' do
-  url 'https://raw.githubusercontent.com/CodeSeven/toastr/master/toastr.js', main: true
-  url 'https://raw.githubusercontent.com/CodeSeven/toastr/master/toastr.css', main: true
+vam 'jquery-livequery' do
+  url 'https://raw.githubusercontent.com/hazzik/livequery/master/dist/jquery.livequery.js', main: true
 end
+
 
 vam 'jquery-layout', 'latest' do
   url "http://layout.jquery-dev.net/lib/js/jquery.layout-#{@version}.js", main: true
@@ -21,6 +21,11 @@ end
 
 vam 'jquery-jsPlumb', '1.6.2' do
   url "http://jsplumbtoolkit.com/js/jquery.jsPlumb-#{@version}.js", main: true
+end
+
+vam 'toastr' do
+  url 'https://raw.githubusercontent.com/CodeSeven/toastr/master/toastr.js', main: true
+  url 'https://raw.githubusercontent.com/CodeSeven/toastr/master/toastr.css', main: true
 end
 
 vam 'chosen' do
