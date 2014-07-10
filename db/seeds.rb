@@ -32,6 +32,12 @@ def try_load_tools(dir)
 
         if param['type'] == 'select'
           param['options'] = p[1]['option']
+
+          if t['multi'] == 'true'
+            param['multi'] = true
+          else
+            param['multi'] = false
+          end
         end
 
         params << param

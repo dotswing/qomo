@@ -8,6 +8,13 @@ tr.param
     td: input type='text' name=param['name']
 
     - when 'select'
-    td: select.chosen name=param['name']
-      = options_for_select param['options'].map {|e| [e['label'], e['value']]}, \
-                           param['options'].select {|e| e['selected'] == 'true'}
+    td
+      - if param['multi']
+        select.chosen name=param['name']
+          = options_for_select param['options'].map {|e| [e['label'], e['value']]}, \
+                               param['options'].select {|e| e['selected'] == 'true'}
+
+      - else
+        select.chosen name=param['name'] multiple=true
+          = options_for_select param['options'].map {|e| [e['label'], e['value']]}, \
+                               param['options'].select {|e| e['selected'] == 'true'}
