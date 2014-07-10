@@ -65,7 +65,7 @@ readyFn = ->
       $target = $(this).closest('table')
 
 
-    $tr_empty = $target.children('tr.empty')
+    $tr_empty = $target.find('tbody tr.empty')
     if $tr_empty.length > 0
       $tr_empty.remove()
 

@@ -7,6 +7,7 @@ class Admin::ToolsController <  Admin::ApplicationController
 
   def new
     @tool = Tool.new
+    @tool.initdir
     @groups = ToolGroup.all
   end
 

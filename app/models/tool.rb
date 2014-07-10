@@ -13,6 +13,11 @@ class Tool < ActiveRecord::Base
   serialize :params, JSON
 
 
+  def initdir
+    self.dirname = "tmp-" + SecureRandom.uuid
+  end
+
+
   def inputs
     self.params.select {|k| k['type'].downcase == 'input'}
   end
@@ -21,6 +26,7 @@ class Tool < ActiveRecord::Base
   def output
     (self.params.select {|k| k['type'].downcase == 'output'})[0]
   end
+
 
   def normal_params
     self.params.reject {|k| ['input', 'output'].include? k['type'].downcase }
