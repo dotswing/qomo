@@ -10,20 +10,18 @@ a.edit-options href='javascript:;' Edit Options
         th Label
         th Value
         th Selected
+        th
     tbody
       - if param.include? 'options'
-        - for o in param['options']
-          tr
-            td
-              input type='text' name='tool[params][][options][][label]' value=o['label']
-            td
-              input type='text' name='tool[params][][options][][value]' value=o['value']
-            td
-              input type='checkbox' name='tool[params][][options][][selected]' checked=o['selected']
+        - for option in param['options']
+          = render partial: 'tr_param_select_option', locals: {option: option}
+
       - else
           tr.empty
-            td colspan=3 Empty
+            td colspan=4 Empty
     tfoot
       tr
+        td
+          button.ui.button.teal.tiny.add-tr data-tpl='#tpl_tr_option' Add
         td colspan=3
-          button.ui.button.teal.tiny OK
+          button.ui.button.teal.tiny.ok OK

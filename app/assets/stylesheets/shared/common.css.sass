@@ -38,6 +38,17 @@ input + input, button + button, a.icon-button + a.icon-button
 .clearfix
   @include clearfix
 
+a.icon-button
+  color: green
+  font-size: $font-family-base
+  &:hover
+    color: darkgreen
+
+  &.remove-tr
+    color: red
+    font-size: 16px
+    margin-left: 12px
+
 fieldset
   border: none
   margin: 0

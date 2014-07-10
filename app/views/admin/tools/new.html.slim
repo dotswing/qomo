@@ -49,7 +49,7 @@
               td = file[:name]
               td
                 = number_to_human_size(file [:size])
-                a.icon-button.remove href='javascript:;'
+                a.icon-button.remove-tr href='javascript:;'
                   i.fa.fa-trash-o
 
   .nine.wide.column
@@ -59,7 +59,8 @@
 
       .field
         ' Parameters
-        a.icon-button.add-param href='javascript:;' data-no-turbolink=true : i.fa.fa-plus
+        a.icon-button.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params' data-no-turbolink=true : i.fa.fa-plus
+
         table.ui.table.compact.segment.params
           tr
             th width='100px'
@@ -91,6 +92,9 @@
 
 script#tpl_tr_param type='text/html'
   = render partial: 'tr_param', locals: {param: {'type' => 'string'}}
+
+script#tpl_tr_option type='text/html'
+  = render partial: 'tr_param_select_option', locals: {option: {}}
 
 - for type in %w[input string bool select path output]
   script id="tpl_param_#{type}" type='text/html'

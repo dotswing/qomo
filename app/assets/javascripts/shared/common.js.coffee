@@ -46,8 +46,34 @@ readyFn = ->
 
   $('.ui.dropdown').dropdown()
 
+
   $('*[title]').popup
     position: 'bottom center'
+
+
+  $(document).on 'click', '.remove-tr', ->
+    $(this).closest('tr').remove()
+    return false
+
+
+  $(document).on 'click', '.add-tr', ->
+    sel_target = $(this).data 'target'
+    $target = {}
+    if sel_target
+      $target = $(sel_target)
+    else
+      $target = $(this).closest('table')
+
+
+    $tr_empty = $target.children('tr.empty')
+    if $tr_empty.length > 0
+      $tr_empty.remove()
+
+    sel_tpl_tr = $(this).data 'tpl'
+
+    $target.append $(sel_tpl_tr).text()
+    return false
+
 
   $('table.sortable').tablesort()
 

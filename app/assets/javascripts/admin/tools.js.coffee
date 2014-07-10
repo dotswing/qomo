@@ -1,17 +1,4 @@
 within 'tools', ->
-  tpl_tr_param = $('#tpl_tr_param').text()
-
-  $('.add-param').click ->
-    $tr_empty = $(this).parents('fieldset').find('table tr.empty')
-    if $tr_empty.length > 0
-      $tr_empty.remove()
-    $(this).parents('fieldset').find('table.params > tbody').append tpl_tr_param
-
-
-  $(document).on 'click', '.params .remove', ->
-    $(this).parents('tr').remove()
-
-
   $('.save-tool').click ->
     $form = $('#form-tool')
     $form.submit()
@@ -35,7 +22,7 @@ within 'tools', ->
     $options.show()
 
 
-  $(document).on 'click', '.params .options button', ->
+  $(document).on 'click', '.params .options button.ok', ->
     $(this).parents('.options').hide()
     return false
 
