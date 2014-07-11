@@ -14,6 +14,8 @@ class Admin::ToolsController <  Admin::ApplicationController
 
   def create
     tool = Tool.new params.require(:tool).permit!
+    tool.id = SecureRandom.uuid
+    tool.dirname = tool.id
     tool.save
     redirect_to action: 'edit', id: tool.id
   end
