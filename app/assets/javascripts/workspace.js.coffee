@@ -1,7 +1,7 @@
 window.plump = {}
 
 hightest_zIndex = 50
-
+toolbox_offset = 0
 
 autoZIndex = ($toolDiv) ->
   hightest_zIndex += 2
@@ -16,6 +16,13 @@ add_toolbox = (box)->
   $box.mousedown ->
     if ($box.css 'z-index') < hightest_zIndex
       autoZIndex $box
+
+  $box.offset
+    top: toolbox_offset
+    left: toolbox_offset
+  toolbox_offset += 30
+  if toolbox_offset > 400
+    toolbox_offset = 5
 
 
   $('#canvas').append $box
