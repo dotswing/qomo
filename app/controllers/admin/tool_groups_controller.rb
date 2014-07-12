@@ -10,7 +10,12 @@ class Admin::ToolGroupsController <  Admin::ApplicationController
   end
 
   def destroy
-    ToolGroup.delete params['id']
+    group = ToolGroup.find params['id']
+
+    if group.tools.length == 0
+      ToolGroup.delete params['id']
+    end
+
     redirect_to action: 'index'
   end
 end
