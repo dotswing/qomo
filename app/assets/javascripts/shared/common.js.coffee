@@ -26,14 +26,14 @@ readyFn = ->
   App.scopes[bodyId]() if App.scopes[bodyId]
   App.scopes[controller]() if App.scopes[controller]
 
-  $('.chosen').livequery ->
-    $(this).chosen()
+  $('.chosen').chosen()
 
   $('table.row-selectable tr th:first-of-type input[type=checkbox]').click ->
     checked = this.checked
     $(this).parents('table.row-selectable').find('tr td:first-of-type input[type=checkbox]').each ->
       this.checked = checked
       return true
+
   $('table.row-selectable tr td:first-of-type input[type=checkbox]').click ->
     $(this).parents('table.row-selectable').find('tr th:first-of-type input[type=checkbox]').removeAttr 'checked'
 

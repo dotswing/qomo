@@ -1,4 +1,4 @@
-.toolbox id=@tool.id
+.toolbox id=SecureRandom.uuid
   .titlebar
     .title = @tool.title
     .btn-close
@@ -7,7 +7,7 @@
 
   table.params
     - for input in @tool.inputs
-      tr.param
+      tr.input.param
         td: label = input['label']
         td: input type='text' name=input['name']
 

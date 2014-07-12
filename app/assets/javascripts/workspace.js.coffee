@@ -1,11 +1,41 @@
-
 window.plump = {}
 
 add_toolbox = (box)->
   $box = $(box)
   $('#canvas').append $box
   plump.draggable $box
-  plump.addEndpoint $box.attr('id')
+
+  # Avoid the jsPlumb endpoint display bug
+  $box.find('.chosen').chosen()
+
+  divHeight = $box.outerHeight()
+  tdHeight = $box.find('td').outerHeight()
+  titleHeight = $box.find('.titlebar').outerHeight()
+
+  for param, i in $box.find('.params .param')
+    $param = $(param)
+    is_input = false
+    if $param.hasClass 'input'
+      is_input = true
+    else if $param.hasClass 'output'
+      is_input = false
+    else
+      continue
+
+    y = (titleHeight+tdHeight*i+20) / divHeight
+
+    color =  unless is_input then "#558822" else "#225588"
+
+    plump.addEndpoint $box.attr('id'),
+      container: "##{$box.attr 'id'}"
+      endpoint: 'Rectangle'
+      anchor: [1, y, 1, 0]
+      paintStyle:
+        fillStyle: color
+        width: 15
+        height: 15
+      isSource: not is_input
+      isTarget: is_input
 
 
 within 'workspace', ->
@@ -15,6 +45,7 @@ within 'workspace', ->
     'stateManagement__enabled': true
     'stateManagement__autoLoad': true
     'stateManagement__autoSave': true
+
 
   $('.tool-groups h5').click ->
     $this = $(this)
@@ -32,7 +63,6 @@ within 'workspace', ->
 
   jsPlumb.ready ->
     window.plump = jsPlumb.getInstance
-      container: 'canvas'
       DragOptions:
         cursor: 'pointer'
         zIndex: 2000
