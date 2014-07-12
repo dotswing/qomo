@@ -15,3 +15,5 @@
 #= require_directory ./shared
 #= require_self
 #= require_directory .
+
+#= require admin/tools

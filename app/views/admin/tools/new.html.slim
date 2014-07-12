@@ -1,13 +1,18 @@
 - content_for :toolbar
   .item
-    button.ui.button.teal.save-tool
+    button.ui.button.teal.small.save-tool
       | Save
 
   .item
-    button.ui.button.teal
+    button.ui.button.teal.small
       | Import from zip
 
-= form_for [:admin, @tool], html: {id: 'form-tool', class: 'ui form grid segment'} do |f|
+- if params['controller'].include? 'admin'
+  - @form_path = [:admin, @tool]
+- else
+  - @form_path = [@tool]
+
+= form_for @form_path, html: {id: 'form-tool', class: 'ui form grid segment'} do |f|
   .seven.wide.column
     fieldset
       legend Basic
@@ -24,10 +29,11 @@
         = f.label :group
         = f.collection_select :group_id, @groups, :id, :title, {}, {class: 'chosen uk-width-1-1'}
 
-      .field
-        = f.label :status
-        = f.select :status, {}, {}, class: 'chosen uk-width-1-1'
-          = options_for_select(Tool.statuses.collect { |s| [s[0].humanize, s[0]] }, selected: @tool.status)
+      - if params['controller'].include? 'admin'
+        .field
+          = f.label :status
+          = f.select :status, {}, {}, class: 'chosen uk-width-1-1'
+            = options_for_select(Tool.statuses.collect { |s| [s[0].humanize, s[0]] }, selected: @tool.status)
 
       fieldset
         legend Attachments
@@ -44,13 +50,18 @@
             th File Name
             th Size
 
-          - for file in @tool.files
-            tr
-              td = file[:name]
-              td
-                = number_to_human_size(file [:size])
-                a.icon-button.remove-tr href='javascript:;'
-                  i.fa.fa-trash-o
+          - if @tool.files and @tool.files.length > 0
+            - for file in @tool.files
+              tr
+                td = file[:name]
+                td
+                  = number_to_human_size(file [:size])
+                  a.icon-button.remove-tr href='javascript:;'
+                    i.fa.fa-trash-o
+          - else
+            tr.empty
+              td colspan=2
+                | Empty
 
   .nine.wide.column
     fieldset
@@ -91,11 +102,11 @@
 
 
 script#tpl_tr_param type='text/html'
-  = render partial: 'tr_param', locals: {param: {'type' => 'string'}}
+  = render partial: 'admin/tools/tr_param', locals: {param: {'type' => 'string'}}
 
 script#tpl_tr_option type='text/html'
-  = render partial: 'tr_param_select_option', locals: {option: {}}
+  = render partial: 'admin/tools/tr_param_select_option', locals: {option: {}}
 
 - for type in %w[input string bool select path output]
   script id="tpl_param_#{type}" type='text/html'
-    = render partial: "param_#{type}", locals: {param: {'type' => type}}
+    = render partial: "admin/tools/param_#{type}", locals: {param: {'type' => type}}

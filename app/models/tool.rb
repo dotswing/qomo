@@ -2,6 +2,8 @@ class Tool < ActiveRecord::Base
 
   default_scope { order('created_at DESC') }
 
+  scope :belongs_to_user, ->(user) {where(owner: user)}
+
   enum status: {
       inactive: 0,
       active: 1

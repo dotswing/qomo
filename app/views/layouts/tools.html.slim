@@ -1,0 +1,16 @@
+- content_for :main
+  .container-fliud
+    .ui.grid
+      .three.wide.column.sidebar
+        .ui.vertical.menu
+          a.item class=active_class('tools-index', 'active teal') href=tools_path
+            | All Tools
+          a.item class=active_class('tools-my', 'active teal') href=my_tools_path
+            | My Library
+          a.item class=active_class('tools-new', 'active teal') href=new_tool_path
+            | Submit New
+
+      .thirteen.wide.column
+        = yield :content
+
+= render template: 'layouts/application'

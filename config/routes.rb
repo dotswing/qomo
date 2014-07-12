@@ -26,6 +26,10 @@ Rails.application.routes.draw do
   resources :pipelines
 
   resources :tools do
+    collection do
+      get 'my'
+    end
+
     member do
       get 'box'
     end

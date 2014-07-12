@@ -7,7 +7,7 @@ tr
           %w[input string bool select path output].map {|e| [e.humanize, e]}, \
           selected: param['type']
   td
-    = render partial: "param_#{param['type']}", locals: {param: param}
+    = render partial: "admin/tools/param_#{param['type']}", locals: {param: param}
   td
     a.icon-button.remove-tr href='javascript:;'
       i.fa.fa-trash-o

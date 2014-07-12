@@ -1,15 +1,16 @@
+- content_for :main
+  .container
+    .ui.grid
+      .four.wide.column
+        .ui.vertical.menu
+          a.item class=active_class('settings/profiles', 'active teal') href=edit_settings_profile_path
+            | User Profile
+          a.item class=active_class('settings/security', 'active teal') href=settings_security_path
+            | Security
+          a.item
+            | Account Settings
+
+      .twelve.wide.column
+        = yield :content
+
 = render template: 'layouts/application'
-.container
-  .ui.grid
-    .four.wide.column
-      .ui.vertical.menu
-        a.item class=active_class('settings/profiles', 'active teal') href=edit_settings_profile_path
-          | User Profile
-        a.item class=active_class('settings/security', 'active teal') href=settings_security_path
-          | Security
-        a.item
-          | Account Settings
-
-    .twelve.wide.column
-      = yield :content
-

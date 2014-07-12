@@ -23,8 +23,8 @@ html lang='en'
           a.item class=active_class('datastore', 'active teal') href=datastore_index_path
             i.fa.fa-database>
             | Datastore
-
           a.item class=active_class('scholar', 'active teal') href=scholar_index_path
+
             i.fa.fa-graduation-cap>
             | Scholars
 
@@ -70,4 +70,7 @@ html lang='en'
 
 
     #main
-      = yield
+      - if content_for? :main
+        = yield :main
+      - else
+        = yield

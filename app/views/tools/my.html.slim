@@ -7,7 +7,7 @@
         th width='20%'
           | Group
         th width='10%'
-          | Owner
+          | Status
         th width='20%'
           | Updated At
 
@@ -16,5 +16,5 @@
         tr
           td = tool.title
           td = tool.group.title
-          td = user_tag tool.owner
+          td = tool.status
           td = tool.updated_at.to_formatted_s(:db)

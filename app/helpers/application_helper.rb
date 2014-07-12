@@ -23,6 +23,7 @@ module ApplicationHelper
 
   end
 
+
   def title_tag
     if @page_title
       title = @page_title
@@ -36,10 +37,17 @@ module ApplicationHelper
 
     title = "Qomo | #{title}"
 
-    content_tag 'title', title
+    content_tag :title, title
   end
+
 
   def page_title(title)
     @page_title = title
   end
+
+
+  def user_tag(user)
+    content_tag :a, user.full_name? ? user.full_name : user.username, href: '#'
+  end
+
 end

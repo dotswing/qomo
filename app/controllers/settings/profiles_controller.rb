@@ -1,5 +1,7 @@
 class Settings::ProfilesController < Settings::ApplicationController
 
+  layout 'settings'
+
   def edit
     @user = current_user
   end

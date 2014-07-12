@@ -16,6 +16,8 @@ class Admin::ToolsController <  Admin::ApplicationController
     tool = Tool.new params.require(:tool).permit!
     tool.id = SecureRandom.uuid
     tool.dirname = tool.id
+    tool.owner = current_user
+    tool.active!
     tool.save
     redirect_to action: 'edit', id: tool.id
   end
