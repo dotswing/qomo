@@ -3,19 +3,15 @@ window.plump = {}
 hightest_zIndex = 50
 toolbox_offset = 0
 
-autoZIndex = ($toolDiv) ->
+autoZIndex = ($box) ->
   hightest_zIndex += 2
-  $toolDiv.css 'z-index', hightest_zIndex
-  $toolDiv.nextAll('._jsPlumb_endpoint').css 'z-index', hightest_zIndex + 1
+  $box.css 'z-index', hightest_zIndex
+  for ep in plump.getEndpoints $box.attr('id')
+    $(ep.canvas).css 'z-index', hightest_zIndex + 1
 
 
 add_toolbox = (box)->
   $box = $(box)
-
-  autoZIndex $box
-  $box.mousedown ->
-    if ($box.css 'z-index') < hightest_zIndex
-      autoZIndex $box
 
   $box.offset
     top: toolbox_offset
@@ -23,7 +19,6 @@ add_toolbox = (box)->
   toolbox_offset += 30
   if toolbox_offset > 400
     toolbox_offset = 5
-
 
   $('#canvas').append $box
   plump.draggable $box
@@ -59,6 +54,11 @@ add_toolbox = (box)->
         height: 15
       isSource: not is_input
       isTarget: is_input
+
+  autoZIndex $box
+  $box.mousedown ->
+    if ($box.css 'z-index') < hightest_zIndex
+      autoZIndex $box
 
 
 within 'workspace', ->
