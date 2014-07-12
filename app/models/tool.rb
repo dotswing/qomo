@@ -1,5 +1,7 @@
 class Tool < ActiveRecord::Base
 
+  MARKDOWN = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
+
   default_scope { order('created_at DESC') }
 
   scope :belongs_to_user, ->(user) {where(owner: user)}
@@ -44,6 +46,11 @@ class Tool < ActiveRecord::Base
     end
 
     files
+  end
+
+
+  def usage_html
+    MARKDOWN.render self.usage
   end
 
 end

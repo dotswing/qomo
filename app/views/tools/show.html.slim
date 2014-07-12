@@ -1,0 +1,40 @@
+- content_for :content
+  .ui.segment.attached
+    h2 = @tool.title
+
+    .ui.list
+      .item
+        .header
+          | Group
+        = @tool.group.title
+
+      .item
+        .header
+          | Input(s)
+        .ui.list.ordered
+          - for input in @tool.inputs
+            .item = input['label']
+
+      .item
+        .header
+          | Output
+        .ui.list.bulleted
+          .item = @tool.output['label']
+
+      .item
+        .header
+          | Parameter(s)
+        .ui.list.ordered
+          - for param in @tool.normal_params
+            .item
+              = param['label']
+              ' :
+              = param['type']
+              - if param['type'] == 'select'
+                ul.options
+                  - for option in param['options']
+                    li
+                      = option['label']
+
+  .ui.segment.attached.usage
+    == @tool.usage_html

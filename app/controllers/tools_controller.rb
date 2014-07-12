@@ -50,4 +50,9 @@ class ToolsController < ApplicationController
     redirect_to action: 'edit', id: tool.id
   end
 
+
+  def show
+    @tool = Tool.find params['id']
+  end
+
 end

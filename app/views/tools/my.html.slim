@@ -14,7 +14,8 @@
     tbody
       - for tool in @tools
         tr
-          td = tool.title
+          td
+            a href=tool_path(tool) = tool.title
           td = tool.group.title
           td = tool.status
           td = tool.updated_at.to_formatted_s(:db)
