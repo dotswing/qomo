@@ -1,7 +1,23 @@
 window.plump = {}
 
+hightest_zIndex = 50
+
+
+autoZIndex = ($toolDiv) ->
+  hightest_zIndex += 2
+  $toolDiv.css 'z-index', hightest_zIndex
+  $toolDiv.nextAll('._jsPlumb_endpoint').css 'z-index', hightest_zIndex + 1
+
+
 add_toolbox = (box)->
   $box = $(box)
+
+  autoZIndex $box
+  $box.mousedown ->
+    if ($box.css 'z-index') < hightest_zIndex
+      autoZIndex $box
+
+
   $('#canvas').append $box
   plump.draggable $box
 
