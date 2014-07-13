@@ -81,7 +81,7 @@ add_toolbox = (box, position, zIndex)->
     else
       continue
 
-    y = (titleHeight+tdHeight*i+20) / divHeight
+    y = (titleHeight+tdHeight*i + 20) / divHeight
 
     color =  unless is_input then "#558822" else "#225588"
 
@@ -140,7 +140,7 @@ within 'workspace', ->
 
     $('.tool-groups a.tool-link').click ->
       $.get this.href, (box) ->
-        add_toolbox(box)
         cache_toolbox(box)
+        add_toolbox(box)
 
       return false
