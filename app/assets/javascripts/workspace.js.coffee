@@ -1,27 +1,68 @@
-window.plump = {}
+window.plumb = {}
 
 hightest_zIndex = 50
 toolbox_offset = 0
 
-autoZIndex = ($box) ->
+
+init_cache = ->
+  if not localStorage.tools
+    localStorage.tools = '{}'
+
+cached_tools = ->
+  JSON.parse localStorage.tools
+
+restore_workspace = ->
+  tools = cached_tools()
+  for i of tools
+    tool = tools[i]
+    add_toolbox tool.box, tool.position
+
+save_cached_tools = (tools)->
+  localStorage.tools = JSON.stringify tools
+
+cache_toolbox = (box)->
+  $box = $(box)
+  tool = {}
+  tool.box = box
+  tools = cached_tools()
+  tools[$box.attr 'id'] = tool
+  save_cached_tools tools
+
+
+update_zIndex = ($box, zIndex) ->
   hightest_zIndex += 2
   $box.css 'z-index', hightest_zIndex
-  for ep in plump.getEndpoints $box.attr('id')
+  for ep in plumb.getEndpoints $box.attr('id')
     $(ep.canvas).css 'z-index', hightest_zIndex + 1
 
 
-add_toolbox = (box)->
+update_position = (tid, position) ->
+  tools = cached_tools()
+  tools[tid].position = position
+  save_cached_tools tools
+
+
+add_toolbox = (box, position, zIndex)->
   $box = $(box)
 
-  $box.offset
-    top: toolbox_offset
-    left: toolbox_offset
-  toolbox_offset += 30
-  if toolbox_offset > 400
-    toolbox_offset = 5
+  if position
+    $box.css
+      top: position.top
+      left: position.left
+  else
+    $box.offset
+      top: toolbox_offset
+      left: toolbox_offset
+    toolbox_offset += 30
+    if toolbox_offset > 400
+      toolbox_offset = 5
+    update_position $box.attr('id'), $box.position()
 
   $('#canvas').append $box
-  plump.draggable $box
+
+  plumb.draggable $box,
+    stop: ->
+      update_position $box.attr('id'), $box.position()
 
   # Avoid the jsPlumb endpoint display bug
   $box.find('.chosen').chosen()
@@ -44,7 +85,7 @@ add_toolbox = (box)->
 
     color =  unless is_input then "#558822" else "#225588"
 
-    plump.addEndpoint $box.attr('id'),
+    plumb.addEndpoint $box.attr('id'),
       container: "##{$box.attr 'id'}"
       endpoint: 'Rectangle'
       anchor: [1, y, 1, 0]
@@ -55,10 +96,10 @@ add_toolbox = (box)->
       isSource: not is_input
       isTarget: is_input
 
-  autoZIndex $box
+  update_zIndex $box
   $box.mousedown ->
     if ($box.css 'z-index') < hightest_zIndex
-      autoZIndex $box
+      update_zIndex $box
 
 
 within 'workspace', ->
@@ -68,6 +109,11 @@ within 'workspace', ->
     'stateManagement__enabled': true
     'stateManagement__autoLoad': true
     'stateManagement__autoSave': true
+
+  init_cache()
+
+  $('.center .save').click ->
+    console.debug 1
 
 
   $('.tool-groups h5').click ->
@@ -85,11 +131,16 @@ within 'workspace', ->
 
 
   jsPlumb.ready ->
-    window.plump = jsPlumb.getInstance
+    window.plumb = jsPlumb.getInstance
       DragOptions:
         cursor: 'pointer'
         zIndex: 2000
 
+    restore_workspace()
+
     $('.tool-groups a.tool-link').click ->
-      $.get this.href, (box) -> add_toolbox(box)
+      $.get this.href, (box) ->
+        add_toolbox(box)
+        cache_toolbox(box)
+
       return false
