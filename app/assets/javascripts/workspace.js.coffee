@@ -162,8 +162,13 @@ within 'workspace', ->
         lineWidth: 5
 
 
+    plumb.bind 'click', (c)->
+      jsPlumb.detach c
+
+
     restore_workspace()
 
+    
     $('.tool-groups a.tool-link').click ->
       $.get this.href, (box) ->
         cache_toolbox(box)
