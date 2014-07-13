@@ -145,10 +145,22 @@ within 'workspace', ->
 
 
   jsPlumb.ready ->
+
     window.plumb = jsPlumb.getInstance
       DragOptions:
         cursor: 'pointer'
         zIndex: 2000
+      ConnectionOverlays: [
+        [
+          "Arrow",
+          location: 0.5,
+          length: 20
+        ]
+      ]
+      PaintStyle:
+        strokeStyle: '#456'
+        lineWidth: 5
+
 
     restore_workspace()
 
