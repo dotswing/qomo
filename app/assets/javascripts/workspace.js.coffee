@@ -50,6 +50,7 @@ save_cached_connections = (connections)->
 cache_toolbox = (box)->
   $box = $(box)
   tool = {}
+  tool.values = {}
   tool.box = box
   tools = cached_tools()
   tools[$box.attr 'id'] = tool
@@ -129,8 +130,19 @@ add_toolbox = (box, position, zIndex)->
 
   for param, i in $box.find('.params .param')
     $param = $(param)
-    is_input = false
 
+    $param.find('input').each ->
+      tools = cached_tools()
+      paramName = $param.data('paramname')
+      $(this).val tools[bid].values[paramName]
+
+      $(this).change ->
+        tools = cached_tools()
+        tools[bid].values[paramName] = $(this).val()
+        console.debug tools[bid].values
+        save_cached_tools(tools)
+
+    is_input = false
     if $param.hasClass 'input'
       is_input = true
     else if $param.hasClass 'output'
