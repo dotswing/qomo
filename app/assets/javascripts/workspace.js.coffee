@@ -8,7 +8,7 @@ init_cache = ->
   if not localStorage.tools
     localStorage.tools = '{}'
 
-cached_tools = ->
+window.cached_tools = ->
   JSON.parse localStorage.tools
 
 restore_workspace = ->
@@ -100,6 +100,20 @@ add_toolbox = (box, position, zIndex)->
   $box.mousedown ->
     if ($box.css 'z-index') < hightest_zIndex
       update_zIndex $box
+
+  $box.find('.close-toolbox').click ->
+    remove_toolbox($box)
+
+
+remove_toolbox = ($box)->
+  tools = cached_tools()
+  delete tools[$box.attr 'id']
+
+  save_cached_tools(tools)
+
+  for ep in plumb.getEndpoints $box.attr('id')
+    plumb.deleteEndpoint ep
+  $box.remove()
 
 
 within 'workspace', ->
