@@ -6,10 +6,18 @@ toolbox_offset = 0
 
 init_cache = ->
   if not localStorage.tools
-    localStorage.tools = '{}'
+    localStorage.tools = JSON.stringify {}
+  if not localStorage.connections
+    localStorage.connections = JSON.stringify []
 
-window.cached_tools = ->
+
+cached_tools = ->
   JSON.parse localStorage.tools
+
+
+cached_connections = ->
+  JSON.parse localStorage.connections
+
 
 restore_workspace = ->
   tools = cached_tools()
@@ -17,8 +25,27 @@ restore_workspace = ->
     tool = tools[i]
     add_toolbox tool.box, tool.position
 
+  connections = cached_connections()
+  for connection in connections
+    add_connection connection
+
+
+add_connection = (connection)->
+  sourceEp = eps[connection.sourceId][connection.sourceParamName]
+  targetEp = eps[connection.targetId][connection.targetParamName]
+  plumb.connect
+    drawEndpoints: false
+    source: sourceEp
+    target: targetEp
+
+
 save_cached_tools = (tools)->
   localStorage.tools = JSON.stringify tools
+
+
+save_cached_connections = (connections)->
+  localStorage.connections = JSON.stringify connections
+
 
 cache_toolbox = (box)->
   $box = $(box)
@@ -42,8 +69,35 @@ update_position = (tid, position) ->
   save_cached_tools tools
 
 
+cache_connection = (sourceId, sourceParamName, targetId, targetParamName)->
+  connections = cached_connections()
+  connections.push
+    sourceId: sourceId
+    sourceParamName: sourceParamName
+    targetId: targetId
+    targetParamName: targetParamName
+
+  save_cached_connections connections
+
+
+delete_connection = (sourceId, sourceParamName, targetId, targetParamName)->
+  connections = cached_connections()
+  for connection, i in connections
+    if connection.sourceId == sourceId and
+       connection.sourceParamName == sourceParamName and
+       connection.targetId == targetId and
+       connection.targetParamName == targetParamName
+
+      connections.splice i, 1
+      save_cached_connections(connections)
+      break
+
+
+eps = {}
+
 add_toolbox = (box, position, zIndex)->
   $box = $(box)
+  bid = $box.attr('id')
 
   if position
     $box.css
@@ -56,13 +110,13 @@ add_toolbox = (box, position, zIndex)->
     toolbox_offset += 30
     if toolbox_offset > 400
       toolbox_offset = 5
-    update_position $box.attr('id'), $box.position()
+    update_position bid, $box.position()
 
   $('#canvas').append $box
 
   plumb.draggable $box,
     stop: ->
-      update_position $box.attr('id'), $box.position()
+      update_position bid, $box.position()
 
   # Avoid the jsPlumb endpoint display bug
   $box.find('.chosen').chosen()
@@ -71,9 +125,12 @@ add_toolbox = (box, position, zIndex)->
   tdHeight = $box.find('td').outerHeight()
   titleHeight = $box.find('.titlebar').outerHeight()
 
+  teps = {}
+
   for param, i in $box.find('.params .param')
     $param = $(param)
     is_input = false
+
     if $param.hasClass 'input'
       is_input = true
     else if $param.hasClass 'output'
@@ -85,8 +142,7 @@ add_toolbox = (box, position, zIndex)->
 
     color =  unless is_input then "#558822" else "#225588"
 
-    plumb.addEndpoint $box.attr('id'),
-      container: "##{$box.attr 'id'}"
+    ep = plumb.addEndpoint $box.attr('id'),
       endpoint: 'Rectangle'
       anchor: [1, y, 1, 0]
       paintStyle:
@@ -95,6 +151,13 @@ add_toolbox = (box, position, zIndex)->
         height: 15
       isSource: not is_input
       isTarget: is_input
+      maxConnections: 50
+
+    ep.paramName = $param.find('input').attr 'name'
+
+    teps[$param.find('input').attr('name')] = ep
+
+  eps[bid] = teps
 
   update_zIndex $box
   $box.mousedown ->
@@ -159,16 +222,26 @@ within 'workspace', ->
       ]
       PaintStyle:
         strokeStyle: '#456'
-        lineWidth: 5
+        lineWidth: 6
 
 
     plumb.bind 'click', (c)->
-      jsPlumb.detach c
+      delete_connection c.sourceId, c.endpoints[0].paramName, c.targetId, c.endpoints[1].paramName
+
+      plumb.detach c
+      return true
+
+
+    plumb.bind 'beforeDrop', (info)->
+      sourceParamName = info.connection.endpoints[0].paramName
+      targetParamName = info.dropEndpoint.paramName
+      cache_connection info.sourceId, sourceParamName, info.targetId, targetParamName
+      return true
 
 
     restore_workspace()
 
-    
+
     $('.tool-groups a.tool-link').click ->
       $.get this.href, (box) ->
         cache_toolbox(box)
