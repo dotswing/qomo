@@ -193,13 +193,21 @@ add_toolbox = (box, position, zIndex)->
 
 
 remove_toolbox = ($box)->
+  bid = $box.attr 'id'
   tools = cached_tools()
-  delete tools[$box.attr 'id']
+  delete tools[bid]
 
   save_cached_tools(tools)
 
-  for ep in plumb.getEndpoints $box.attr('id')
+  connections = cached_connections()
+  for connection, i in connections
+    if bid in [connection.sourceId, connection.targetId]
+      connections.splice i, 1
+  save_cached_connections(connections)
+
+  for ep in plumb.getEndpoints bid
     plumb.deleteEndpoint ep
+
   $box.remove()
 
 
