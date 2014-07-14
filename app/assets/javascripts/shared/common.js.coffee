@@ -1,6 +1,9 @@
 #= require jquery-tablesort
 #= require semantic
 #= require jquery-livequery
+#= require artDialog/dialog
+#= require artDialog/dialog-plus
+#= require jquery-form
 
 window.App =
   scopes: {}

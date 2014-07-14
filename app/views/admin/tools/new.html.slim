@@ -19,20 +19,20 @@
 
       .field
         = f.label :title
-        = f.text_field :title, class: 'uk-width-1-1', placeholder: 'Human friendly name'
+        = f.text_field :title, placeholder: 'Human friendly name'
 
       .field
         = f.label :contributor
-        = f.text_field :contributor, class: 'uk-width-1-1', placeholder: 'Multiple contributors may be seperated by semicolon'
+        = f.text_field :contributor, placeholder: 'Multiple contributors may be seperated by semicolon'
 
       .field
         = f.label :group
-        = f.collection_select :group_id, @groups, :id, :title, {}, {class: 'chosen uk-width-1-1'}
+        = f.collection_select :group_id, @groups, :id, :title, {}, {class: 'chosen'}
 
       - if params['controller'].include? 'admin'
         .field
           = f.label :status
-          = f.select :status, {}, {}, class: 'chosen uk-width-1-1'
+          = f.select :status, {}, {}, class: 'chosen'
             = options_for_select(Tool.statuses.collect { |s| [s[0].humanize, s[0]] }, selected: @tool.status)
 
       fieldset

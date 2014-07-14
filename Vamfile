@@ -42,3 +42,12 @@ end
 vam 'jquery-tablesort' do
   url 'https://raw.githubusercontent.com/kylefox/jquery-tablesort/master/jquery.tablesort.js', main: true
 end
+
+vam 'artDialog' do
+  url 'https://raw.githubusercontent.com/aui/artDialog/master/dist/dialog.js'
+  url 'https://raw.githubusercontent.com/aui/artDialog/master/dist/dialog-plus.js'
+end
+
+vam 'jquery-form' do
+  url 'https://raw.githubusercontent.com/malsup/form/master/jquery.form.js', main: true
+end

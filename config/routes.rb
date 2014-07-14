@@ -23,7 +23,11 @@ Rails.application.routes.draw do
     get :index
   end
 
-  resources :pipelines
+  resources :pipelines do
+    collection do
+      get 'my'
+    end
+  end
 
   resources :tools do
     collection do

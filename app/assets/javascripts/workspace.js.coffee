@@ -222,7 +222,24 @@ within 'workspace', ->
   init_cache()
 
   $('.center .save').click ->
-    console.debug 1
+    $.get this.href, (data)->
+      dia = dialog
+        title: 'Save pipeline'
+        content: data
+        width: 700
+        okValue: 'Save'
+        ok: ->
+          $form = $('#form-pipeline')
+          $form.find('#pipeline_tools').val = cached_tools()
+          $form.find('#pipeline_connections').val = cached_connections()
+          $form.ajaxSubmit()
+          return true
+        cancelValue: 'Cancel'
+        cancel: ->
+
+      dia.showModal()
+
+    return false
 
 
   $('.tool-groups h5').click ->

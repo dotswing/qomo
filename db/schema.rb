@@ -35,9 +35,13 @@ ActiveRecord::Schema.define(version: 20140413104534) do
     t.string :pid
     t.string :title
     t.text :desc
-    t.text :content
 
-    t.integer :status, default: 0
+    t.text :tools
+    t.text :connections
+
+    t.text :params
+
+    t.boolean :public, default: false
 
     t.timestamps
   end

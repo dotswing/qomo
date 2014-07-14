@@ -1,0 +1,14 @@
+- content_for :main
+  .container-fliud
+    .ui.grid
+      .three.wide.column.sidebar
+        .ui.vertical.menu
+          a.item class=active_class('pipelines-index', 'active teal') href=pipelines_path
+            | All Pipelines
+          a.item class=active_class('pipelines-my', 'active teal') href=my_pipelines_path
+            | My Library
+
+      .thirteen.wide.column
+        = yield :content
+
+= render template: 'layouts/application'

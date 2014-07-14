@@ -1,19 +1,23 @@
 - content_for :content
   table.ui.table.segment.padded
     thead
-      th width='50%'
+      th width='60%'
         | Title
       th width='15%'
-        | Owner
-      th width='15%'
         | Updated at
-      th width='20%'
+      th width='25%'
         | Operation
 
     tbody
       - for pipeline in @pipelines
         tr
           td = pipeline.title
-          td = user_tag pipeline.owner
           td = pipeline.updated_at.to_s(:db)
           td
+            .ui.buttons
+              button.ui.button.tiny.teal Load
+              button.ui.button.tiny.teal Merge
+
+            .ui.buttons
+              button.ui.button.tiny.teal Edit
+              button.ui.button.tiny.red Delete
