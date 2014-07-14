@@ -9,7 +9,7 @@
     - for input in @tool.inputs
       tr.input.param data-paramname=input['name']
         td: label = input['label']
-        td: input.value type='text' name=input['name']
+        td: input.value type='text' name=input['name'] value=input['value']
 
     - for param in @tool.normal_params
       = render partial: 'param', locals: {param: param}
@@ -17,4 +17,4 @@
     - if @tool.output
       tr.output.param  data-paramname=@tool.output['name']
         td: label = @tool.output['label']
-        td: input.value type='text' name=@tool.output['name']
+        td: input.value type='text' name=@tool.output['name'] value=@tool.output['value']
