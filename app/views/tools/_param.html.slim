@@ -7,6 +7,9 @@ tr.param data-paramname=param['name']
     - when 'path'
     td: input type='text' name=param['name']
 
+    - when 'bool'
+    td: input type='checkbox' name=param['name']
+
     - when 'select'
     td
       select.chosen name=param['name'] multiple=param['multiple']

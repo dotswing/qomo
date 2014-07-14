@@ -15,9 +15,14 @@ window.App =
       row_ids.push $(this).parents('tr').data 'row-id'
     return row_ids
 
+  setSelectValues: (selct, values)->
+    $(selct).find('option').each ->
+      this.selected = true if this.value in values
+
 
 window.within = (scope, fn)->
   App.scopes[scope] = fn
+
 
 
 readyFn = ->

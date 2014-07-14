@@ -100,6 +100,8 @@ add_toolbox = (box, position, zIndex)->
   $box = $(box)
   bid = $box.attr('id')
 
+  $box.find('select').chosen()
+
   if position
     $box.css
       top: position.top
@@ -119,9 +121,6 @@ add_toolbox = (box, position, zIndex)->
     stop: ->
       update_position bid, $box.position()
 
-  # Avoid the jsPlumb endpoint display bug
-  $box.find('.chosen').chosen()
-
   divHeight = $box.outerHeight()
   tdHeight = $box.find('td').outerHeight()
   titleHeight = $box.find('.titlebar').outerHeight()
@@ -131,16 +130,29 @@ add_toolbox = (box, position, zIndex)->
   for param, i in $box.find('.params .param')
     $param = $(param)
 
-    $param.find('input').each ->
+    $param.find('input, select').each ->
       tools = cached_tools()
       paramName = $param.data('paramname')
-      $(this).val tools[bid].values[paramName]
+
+      value = tools[bid].values[paramName]
+      if value
+        if $(this).is(':checkbox')
+          this.checked = value
+        else if $(this).is('select')
+          App.setSelectValues this, value
+          $(this).trigger 'chosen:updated'
+        else
+          $(this).val value
 
       $(this).change ->
         tools = cached_tools()
-        tools[bid].values[paramName] = $(this).val()
-        console.debug tools[bid].values
+        value = $(this).val()
+        if $(this).is(':checkbox')
+          value = $(this).is(':checked')
+
+        tools[bid].values[paramName] = value
         save_cached_tools(tools)
+
 
     is_input = false
     if $param.hasClass 'input'
