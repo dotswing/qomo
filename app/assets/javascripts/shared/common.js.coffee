@@ -52,7 +52,7 @@ readyFn = ->
   $('.ui.dropdown').dropdown()
 
 
-  $('*[title]').popup
+  $('.popup[title]').popup
     position: 'bottom center'
 
 

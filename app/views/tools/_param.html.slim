@@ -2,16 +2,16 @@ tr.param data-paramname=param['name']
   td: label = param['label']
   - case param['type']
     - when 'string'
-    td: input type='text' name=param['name']
+    td: input.value type='text' name=param['name']
 
     - when 'path'
-    td: input type='text' name=param['name']
+    td: input.value type='text' name=param['name']
 
     - when 'bool'
-    td: input type='checkbox' name=param['name']
+    td: input.value type='checkbox' name=param['name']
 
     - when 'select'
     td
-      select.chosen name=param['name'] multiple=param['multiple']
+      select.value.chosen name=param['name'] multiple=param['multiple']
         = options_for_select param['options'].map {|e| [e['label'], e['value']]}, \
                              param['options'].select {|e| e['selected'] == 'true'}

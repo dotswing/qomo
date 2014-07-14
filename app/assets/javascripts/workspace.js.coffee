@@ -100,8 +100,6 @@ add_toolbox = (box, position, zIndex)->
   $box = $(box)
   bid = $box.attr('id')
 
-  $box.find('select').chosen()
-
   if position
     $box.css
       top: position.top
@@ -117,6 +115,8 @@ add_toolbox = (box, position, zIndex)->
 
   $('#canvas').append $box
 
+  $box.find('select').chosen()
+
   plumb.draggable $box,
     stop: ->
       update_position bid, $box.position()
@@ -130,7 +130,7 @@ add_toolbox = (box, position, zIndex)->
   for param, i in $box.find('.params .param')
     $param = $(param)
 
-    $param.find('input, select').each ->
+    $param.find('.value').each ->
       tools = cached_tools()
       paramName = $param.data('paramname')
 
