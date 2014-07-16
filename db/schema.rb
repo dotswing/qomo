@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20140413104534) do
     t.string :title
     t.text :desc
 
-    t.text :tools
+    t.text :boxes
     t.text :connections
 
     t.text :params

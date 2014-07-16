@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   namespace :workspace do
     get :index
+    get 'load/:id', action: 'load', as: 'load_pipeline'
+    get 'merge/:id', action: 'merge', as: 'merge_pipeline'
   end
 
   namespace :datastore do
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
     collection do
       get 'my'
     end
+
   end
 
   resources :tools do
@@ -34,8 +37,13 @@ Rails.application.routes.draw do
       get 'my'
     end
 
+    collection do
+      get 'boxes'
+    end
+
     member do
       get 'box'
+      get 'box/:bid', action: 'box'
     end
   end
 

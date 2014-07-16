@@ -5,14 +5,14 @@ toolbox_offset = 0
 
 
 init_cache = ->
-  if not localStorage.tools
-    localStorage.tools = JSON.stringify {}
+  if not localStorage.boxes
+    localStorage.boxes = JSON.stringify {}
   if not localStorage.connections
     localStorage.connections = JSON.stringify []
 
 
-cached_tools = ->
-  JSON.parse localStorage.tools
+cached_boxes = ->
+  JSON.parse localStorage.boxes
 
 
 cached_connections = ->
@@ -20,14 +20,17 @@ cached_connections = ->
 
 
 restore_workspace = ->
-  tools = cached_tools()
-  for i of tools
-    tool = tools[i]
-    add_toolbox tool.box, tool.position
+  if _load
+    localStorage.boxes = _boxes
+    localStorage.connections = _connections
 
-  connections = cached_connections()
-  for connection in connections
-    add_connection connection
+  boxes = cached_boxes()
+
+  add_toolboxes boxes, ->
+    connections = cached_connections()
+    for connection in connections
+      add_connection connection
+
 
 
 add_connection = (connection)->
@@ -39,22 +42,22 @@ add_connection = (connection)->
     target: targetEp
 
 
-save_cached_tools = (tools)->
-  localStorage.tools = JSON.stringify tools
+save_cached_boxes = (boxes)->
+  localStorage.boxes = JSON.stringify boxes
 
 
 save_cached_connections = (connections)->
   localStorage.connections = JSON.stringify connections
 
 
-cache_toolbox = (box)->
-  $box = $(box)
-  tool = {}
-  tool.values = {}
-  tool.box = box
-  tools = cached_tools()
-  tools[$box.attr 'id'] = tool
-  save_cached_tools tools
+cache_box = (bid, tid)->
+  box = {}
+  box.id = bid
+  box.tid = tid
+  box.values = {}
+  boxes = cached_boxes()
+  boxes[bid] = box
+  save_cached_boxes boxes
 
 
 update_zIndex = ($box, zIndex) ->
@@ -64,10 +67,10 @@ update_zIndex = ($box, zIndex) ->
     $(ep.canvas).css 'z-index', hightest_zIndex + 1
 
 
-update_position = (tid, position) ->
-  tools = cached_tools()
-  tools[tid].position = position
-  save_cached_tools tools
+update_position = (bid, position) ->
+  boxes = cached_boxes()
+  boxes[bid].position = position
+  save_cached_boxes boxes
 
 
 cache_connection = (sourceId, sourceParamName, targetId, targetParamName)->
@@ -94,11 +97,32 @@ delete_connection = (sourceId, sourceParamName, targetId, targetParamName)->
       break
 
 
-eps = {}
+window.eps = {}
 
-add_toolbox = (box, position, zIndex)->
-  $box = $(box)
-  bid = $box.attr('id')
+add_toolboxes = (boxes, hook)->
+  return if cached_boxes().length == 0
+
+  url = '/tools/boxes?'
+  for i of boxes
+    box = boxes[i]
+    url += "box[][id]=#{box.id}"
+    url += "&box[][tid]=#{box.tid}&"
+
+  boxes = cached_boxes()
+  $.get url, (boxes_html) ->
+    $(boxes_html).each ->
+      box = boxes[this.id]
+      init_box this, box.id, box.position
+    hook()
+
+
+add_toolbox = (bid, tid, position)->
+  $.get "/tools/#{tid}/box/#{bid}", (box)->
+    init_box box, bid, position
+
+
+init_box = (box_html, bid, position)->
+  $box = $(box_html)
 
   if position
     $box.css
@@ -131,10 +155,10 @@ add_toolbox = (box, position, zIndex)->
     $param = $(param)
 
     $param.find('.value').each ->
-      tools = cached_tools()
+      boxes = cached_boxes()
       paramName = $param.data('paramname')
 
-      value = tools[bid].values[paramName]
+      value = boxes[bid].values[paramName]
       if value
         if $(this).is(':checkbox')
           this.checked = value
@@ -145,13 +169,13 @@ add_toolbox = (box, position, zIndex)->
           $(this).val value
 
       $(this).change ->
-        tools = cached_tools()
+        boxes = cached_boxes()
         value = $(this).val()
         if $(this).is(':checkbox')
           value = $(this).is(':checked')
 
-        tools[bid].values[paramName] = value
-        save_cached_tools(tools)
+        boxes[bid].values[paramName] = value
+        save_cached_boxes(boxes)
 
 
     is_input = false
@@ -166,7 +190,7 @@ add_toolbox = (box, position, zIndex)->
 
     color =  unless is_input then "#558822" else "#225588"
 
-    ep = plumb.addEndpoint $box.attr('id'),
+    ep = plumb.addEndpoint bid,
       endpoint: 'Rectangle'
       anchor: [1, y, 1, 0]
       paintStyle:
@@ -194,10 +218,10 @@ add_toolbox = (box, position, zIndex)->
 
 remove_toolbox = ($box)->
   bid = $box.attr 'id'
-  tools = cached_tools()
-  delete tools[bid]
+  boxes = cached_boxes()
+  delete boxes[bid]
 
-  save_cached_tools(tools)
+  save_cached_boxes(boxes)
 
   connections = cached_connections()
   for connection, i in connections
@@ -230,8 +254,8 @@ within 'workspace', ->
         okValue: 'Save'
         ok: ->
           $form = $('#form-pipeline')
-          $form.find('#pipeline_tools').val = cached_tools()
-          $form.find('#pipeline_connections').val = cached_connections()
+          $form.find('#pipeline_boxes').val localStorage.boxes
+          $form.find('#pipeline_connections').val localStorage.connections
           $form.ajaxSubmit()
           return true
         cancelValue: 'Cancel'
@@ -293,7 +317,7 @@ within 'workspace', ->
 
     $('.tool-groups a.tool-link').click ->
       $.get this.href, (box) ->
-        cache_toolbox(box)
-        add_toolbox(box)
+        cache_box $(box).attr('id'), $(box).data 'tid'
+        add_toolbox $(box).attr('id'), $(box).data 'tid'
 
       return false

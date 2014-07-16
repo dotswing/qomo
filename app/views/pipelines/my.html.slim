@@ -15,9 +15,9 @@
           td = pipeline.updated_at.to_s(:db)
           td
             .ui.buttons
-              button.ui.button.tiny.teal Load
-              button.ui.button.tiny.teal Merge
+              a.ui.button.tiny.teal.load href=workspace_load_pipeline_path(pipeline) Load
+              a.ui.button.tiny.teal.merge href=workspace_merge_pipeline_path(pipeline) Merge
 
             .ui.buttons
-              button.ui.button.tiny.teal Edit
-              button.ui.button.tiny.red Delete
+              a.ui.button.tiny.teal.edit Edit
+              a.ui.button.tiny.red.delete Delete

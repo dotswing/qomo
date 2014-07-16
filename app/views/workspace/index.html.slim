@@ -42,3 +42,19 @@
       li asd
       li asd
       li s
+
+javascript:
+  _load = false
+  _merge = false
+
+- if action? 'load'
+  javascript:
+    _load = true
+    _boxes = '#{{@pipeline.boxes}}'
+    _connections = '#{{@pipeline.connections}}'
+
+- if action? 'merge'
+  javascript:
+    _merge = true
+    _boxes = '#{{@pipeline.boxes}}'
+    _connections = '#{{@pipeline.connections}}'

@@ -13,10 +13,33 @@ class ToolsController < ApplicationController
 
 
   def box
-    @tool = Tool.find params['id']
+    tool = Tool.find params['id']
 
-    render 'box', layout: nil
+    if params['bid']
+      id = params['bid']
+    else
+      id = SecureRandom.uuid
+    end
+
+    @boxes = [{id: id, tool: tool}]
+
+    render 'boxes', layout: nil
   end
+
+
+  def boxes
+    @boxes = params.require('box').map do |e|
+      id = e['id']
+      unless e['id']
+        id = SecureRandom.uuid
+      end
+      tool = Tool.find e['tid']
+      {id: e['id'], tool: tool}
+    end
+
+    render 'boxes', layout: nil
+  end
+
 
 
   def new
