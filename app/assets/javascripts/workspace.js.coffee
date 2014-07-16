@@ -40,6 +40,7 @@ add_connection = (connection)->
     drawEndpoints: false
     source: sourceEp
     target: targetEp
+  $("\##{connection.targetId}").find("input[name=#{connection.targetParamName}]").val('').prop 'disabled', true
 
 
 save_cached_boxes = (boxes)->
@@ -94,6 +95,8 @@ delete_connection = (sourceId, sourceParamName, targetId, targetParamName)->
 
       connections.splice i, 1
       save_cached_connections(connections)
+
+      $("\##{connection.targetId}").find("input[name=#{connection.targetParamName}]").val('').removeAttr 'disabled'
       break
 
 
@@ -318,6 +321,9 @@ within 'workspace', ->
       sourceParamName = info.connection.endpoints[0].paramName
       targetParamName = info.dropEndpoint.paramName
       cache_connection info.sourceId, sourceParamName, info.targetId, targetParamName
+
+
+      $("\##{info.targetId}").find("input[name=#{targetParamName}]").val('').prop 'disabled', true
       return true
 
 
