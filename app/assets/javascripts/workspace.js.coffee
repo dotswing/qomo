@@ -100,7 +100,7 @@ delete_connection = (sourceId, sourceParamName, targetId, targetParamName)->
 window.eps = {}
 
 add_toolboxes = (boxes, hook)->
-  return if cached_boxes().length == 0
+  return if localStorage.boxes == '{}'
 
   url = '/tools/boxes?'
   for i of boxes
@@ -158,23 +158,29 @@ init_box = (box_html, bid, position)->
       boxes = cached_boxes()
       paramName = $param.data('paramname')
 
+      # When this is a new added tool, we should populate its default values first
+      unless position
+        boxes[bid].values[paramName] = if $(this).is(':checkbox') then this.checked else $(this).val()
+        save_cached_boxes(boxes)
+
       value = boxes[bid].values[paramName]
-      if value
-        if $(this).is(':checkbox')
-          this.checked = value
-        else if $(this).is('select')
-          App.setSelectValues this, value
-          $(this).trigger 'chosen:updated'
-        else
-          $(this).val value
+      if $(this).is(':checkbox')
+        this.checked = value
+      else if $(this).is('select')
+        App.setSelectValues this, value
+        $(this).trigger 'chosen:updated'
+      else
+        $(this).val value
 
       $(this).change ->
         boxes = cached_boxes()
         value = $(this).val()
+
         if $(this).is(':checkbox')
           value = $(this).is(':checked')
 
         boxes[bid].values[paramName] = value
+
         save_cached_boxes(boxes)
 
 
