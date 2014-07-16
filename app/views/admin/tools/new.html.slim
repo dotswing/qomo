@@ -84,7 +84,7 @@
           = empty_row @tool.params, 5
           - if @tool.params
             - for param in @tool.params
-              = render 'tr_param', param: param
+              = render 'admin/tools/tr_param', param: param
 
       .field
         = f.label :command

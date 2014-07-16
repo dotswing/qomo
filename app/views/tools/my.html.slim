@@ -15,7 +15,7 @@
       - for tool in @tools
         tr
           td
-            a href=tool_path(tool) = tool.title
+            a href=edit_tool_path(tool) = tool.title
           td = tool.group.title
           td = tool.status
           td = tool.updated_at.to_formatted_s(:db)
