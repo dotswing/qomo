@@ -39,4 +39,10 @@ class PipelinesController < ApplicationController
     redirect_to action: 'my'
   end
 
+
+  def destroy
+    Pipeline.delete params['id']
+    redirect_to action: 'my'
+  end
+
 end

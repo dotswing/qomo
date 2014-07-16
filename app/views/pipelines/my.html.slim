@@ -9,6 +9,10 @@
         | Operation
 
     tbody
+      - if @pipelines.length == 0
+        tr.empty
+          td colspan=3
+            | Empty
       - for pipeline in @pipelines
         tr
           td = pipeline.title
@@ -20,4 +24,4 @@
 
             .ui.buttons
               a.ui.button.tiny.teal.edit href=edit_pipeline_path(pipeline) Edit
-              a.ui.button.tiny.red.delete Delete
+              a.ui.button.tiny.red.delete href=pipeline_path(pipeline) data-method='delete' Delete
