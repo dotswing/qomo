@@ -20,7 +20,7 @@ class PipelinesController < ApplicationController
 
   def edit
     @pipeline = Pipeline.find params['id']
-    render 'new', layout: nil
+    render 'edit', layout: nil
   end
 
 
@@ -30,6 +30,13 @@ class PipelinesController < ApplicationController
     pipeline.save
 
     render text: true
+  end
+
+
+  def update
+    Pipeline.find(params['id']).update(params.require('pipeline').permit!)
+
+    redirect_to action: 'my'
   end
 
 end
