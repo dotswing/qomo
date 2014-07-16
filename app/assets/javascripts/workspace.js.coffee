@@ -183,7 +183,6 @@ init_box = (box_html, bid, position)->
 
         save_cached_boxes(boxes)
 
-
     is_input = false
     if $param.hasClass 'input'
       is_input = true
@@ -220,6 +219,10 @@ init_box = (box_html, bid, position)->
 
   $box.find('.close-toolbox').click ->
     remove_toolbox($box)
+
+  plumb.repaint bid
+  $box.bind 'DOMSubtreeModified', ->
+    plumb.repaint bid
 
 
 remove_toolbox = ($box)->
