@@ -9,10 +9,8 @@
         | Operation
 
     tbody
-      - if @pipelines.length == 0
-        tr.empty
-          td colspan=3
-            | Empty
+      = empty_row @pipelines, 3
+
       - for pipeline in @pipelines
         tr
           td = pipeline.title

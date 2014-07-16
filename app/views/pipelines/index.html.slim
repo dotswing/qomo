@@ -11,6 +11,7 @@
         | Operation
 
     tbody
+      = empty_row @tools, 4
       - for pipeline in @pipelines
         tr
           td = pipeline.title

@@ -12,6 +12,8 @@
           | Updated At
 
     tbody
+      = empty_row @tools, 4
+
       - for tool in @tools
         tr
           td

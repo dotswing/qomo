@@ -40,7 +40,7 @@
         #uploader
           i.fa.fa-cloud-upload
           '  Dropthem here or
-          a.uk-form-file
+          a
             | select one
             input type='file'
             | .
@@ -50,18 +50,14 @@
             th File Name
             th Size
 
-          - if @tool.files and @tool.files.length > 0
-            - for file in @tool.files
-              tr
-                td = file[:name]
-                td
-                  = number_to_human_size(file [:size])
-                  a.icon-button.remove-tr href='javascript:;'
-                    i.fa.fa-trash-o
-          - else
-            tr.empty
-              td colspan=2
-                | Empty
+          = empty_row @tool.files, 2
+          - for file in @tool.files
+            tr
+              td = file[:name]
+              td
+                = number_to_human_size(file [:size])
+                a.icon-button.remove-tr href='javascript:;'
+                  i.fa.fa-trash-o
 
   .nine.wide.column
     fieldset
@@ -70,7 +66,8 @@
 
       .field
         ' Parameters
-        a.icon-button.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params' data-no-turbolink=true : i.fa.fa-plus
+        a.icon-button.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params' data-no-turbolink=true
+          i.fa.fa-plus
 
         table.ui.table.compact.segment.params
           tr
@@ -84,21 +81,18 @@
               | Values / Definition
             th width='50px'
 
+          = empty_row @tool.params, 5
           - if @tool.params
             - for param in @tool.params
               = render 'tr_param', param: param
-          - else
-            tr.empty
-              td colspan=5
-                | Empty
 
       .field
         = f.label :command
-        = f.text_field :command, spellcheck: 'false', class: 'uk-width-1-1 monospace', placeholder: '#{hadoop_jar} JARFILE MAINCLASS #{input} #{PARAM_NAME} #{output}'
+        = f.text_field :command, spellcheck: 'false', class: 'monospace', placeholder: '#{hadoop_jar} JARFILE MAINCLASS #{input} #{PARAM_NAME} #{output}'
 
       .field
         = f.label :usage
-        = f.text_area :usage, class: 'uk-width-1-1', placeholder: 'Details about this tool. References are recommended to be included.'
+        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.'
 
 
 script#tpl_tr_param type='text/html'

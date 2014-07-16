@@ -50,4 +50,12 @@ module ApplicationHelper
     content_tag :a, user.full_name? ? user.full_name : user.username, href: '#'
   end
 
+
+  def empty_row(collection, colspan)
+    return if collection and collection.length > 0
+
+    content_tag :tr, content_tag(:td, 'Empty', colspan: colspan), class: 'empty'
+  end
+
+
 end
