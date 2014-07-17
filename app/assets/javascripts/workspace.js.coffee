@@ -19,10 +19,17 @@ cached_connections = ->
   JSON.parse localStorage.connections
 
 
+load = (pid)->
+  $.get "/pipelines/#{pid}.json", (data)->
+    localStorage.boxes = data.boxes
+    localStorage.connec = data.connections
+
+merge = (pid)->
+
+
 restore_workspace = ->
-  if _load
-    localStorage.boxes = _boxes
-    localStorage.connections = _connections
+  if typeof(_action) != 'undefined'
+    eval "#{_action}('#{_pid}')"
 
   boxes = cached_boxes()
 

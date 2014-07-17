@@ -31,7 +31,7 @@
       a.ui.button.tiny.run
         i.fa.fa-play>
         ' Run
-  #canvas.content
+  #canvas
 
 
 .east.qpanel.ui-layout-east
@@ -43,18 +43,7 @@
       li asd
       li s
 
-javascript:
-  _load = false
-  _merge = false
-
-- if action? 'load'
+- if @action
   javascript:
-    _load = true
-    _boxes = '#{{@pipeline.boxes}}'
-    _connections = '#{{@pipeline.connections}}'
-
-- if action? 'merge'
-  javascript:
-    _merge = true
-    _boxes = '#{{@pipeline.boxes}}'
-    _connections = '#{{@pipeline.connections}}'
+    _action = "#{@action}"
+    _pid = "#{@pid}"
