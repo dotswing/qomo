@@ -4,6 +4,16 @@ hightest_zIndex = 50
 toolbox_offset = 0
 
 
+get_pid = ->
+  localStorage.getItem('pid')
+
+set_pid = (value)->
+  if value == null
+    localStorage.removeItem 'pid'
+  else
+    localStorage.pid = value
+
+
 init_cache = (forse=false)->
   if forse or not localStorage.boxes
     localStorage.boxes = JSON.stringify {}
@@ -20,15 +30,18 @@ cached_connections = ->
 
 
 load = (pid)->
+  set_pid(pid)
   $.get "/pipelines/#{pid}.json", (data)->
     localStorage.boxes = data.boxes
-    localStorage.connec = data.connections
+    localStorage.connections = data.connections
+
 
 merge = (pid)->
 
 
 clean_workspace = ->
   init_cache(true)
+  set_pid(null)
   $('#canvas .toolbox').remove()
   plumb.deleteEveryEndpoint()
 
@@ -260,6 +273,11 @@ remove_toolbox = ($box)->
   $box.remove()
 
 
+populate_pform = ($form)->
+  $form.find('#pipeline_boxes').val localStorage.boxes
+  $form.find('#pipeline_connections').val localStorage.connections
+
+
 within 'workspace', ->
   $('#main').layout
     'west__size': .15
@@ -271,22 +289,28 @@ within 'workspace', ->
   init_cache()
 
   $('.center .save').click ->
-    $.get this.href, (data)->
-      dia = dialog
-        title: 'Save pipeline'
-        content: data
-        width: 700
-        okValue: 'Save'
-        ok: ->
-          $form = $('#form-pipeline')
-          $form.find('#pipeline_boxes').val localStorage.boxes
-          $form.find('#pipeline_connections').val localStorage.connections
-          $form.ajaxSubmit()
-          return true
-        cancelValue: 'Cancel'
-        cancel: ->
+    if get_pid() != null
 
-      dia.showModal()
+      $.get "/pipelines/#{get_pid()}/edit", (data)->
+        $form =$(data)
+        populate_pform $form
+        $form.ajaxSubmit()
+    else
+      $.get this.href, (data)->
+        dia = dialog
+          title: 'Save pipeline'
+          content: data
+          width: 700
+          okValue: 'Save'
+          ok: ->
+            $form = $('#form-pipeline')
+            populate_pform $form
+            $form.ajaxSubmit()
+            return true
+          cancelValue: 'Cancel'
+          cancel: ->
+
+        dia.showModal()
 
     return false
 
