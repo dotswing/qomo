@@ -40,13 +40,22 @@ load = (pid)->
 merge = (pid)->
   $.get "/pipelines/#{pid}.json", (data)->
     boxes = cached_boxes()
+
     new_boxes = JSON.parse(data.boxes)
+    new_connections = JSON.parse(data.connections)
+
     for i of new_boxes
       new_box = new_boxes[i]
-      boxes[i] = new_box
+      new_id = App.guid()
+      new_box.id = new_id
+      boxes[new_id] = new_box
+      for new_connection in new_connections
+        new_connection.sourceId = new_id if new_connection.sourceId == i
+        new_connection.targetId = new_id if new_connection.targetId == i
+
     save_cached_boxes(boxes)
 
-    connections = cached_connections().concat JSON.parse(data.connections)
+    connections = cached_connections().concat new_connections
     save_cached_connections(connections)
 
     restore_workspace()

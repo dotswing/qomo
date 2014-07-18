@@ -5,6 +5,15 @@
 #= require artDialog/dialog-plus
 #= require jquery-form
 
+
+class GUID
+  s4: ->
+    Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+
+  create: () ->
+    "#{@s4()}#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}#{@s4()}#{@s4()}"
+
+
 window.App =
   scopes: {}
   goto: (url) ->
@@ -22,6 +31,9 @@ window.App =
     values = [] unless values
     $(select).find('option').each ->
       $(this).prop('selected', this.value in values)
+
+  guid: ->
+    new GUID().create()
 
 
 window.within = (scope, fn)->
