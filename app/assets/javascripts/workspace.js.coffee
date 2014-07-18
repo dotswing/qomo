@@ -34,9 +34,22 @@ load = (pid)->
   $.get "/pipelines/#{pid}.json", (data)->
     localStorage.boxes = data.boxes
     localStorage.connections = data.connections
+    restore_workspace()
 
 
 merge = (pid)->
+  $.get "/pipelines/#{pid}.json", (data)->
+    boxes = cached_boxes()
+    new_boxes = JSON.parse(data.boxes)
+    for i of new_boxes
+      new_box = new_boxes[i]
+      boxes[i] = new_box
+    save_cached_boxes(boxes)
+
+    connections = cached_connections().concat JSON.parse(data.connections)
+    save_cached_connections(connections)
+
+    restore_workspace()
 
 
 clean_workspace = ->
@@ -47,9 +60,6 @@ clean_workspace = ->
 
 
 restore_workspace = ->
-  if typeof(_action) != 'undefined'
-    eval "#{_action}('#{_pid}')"
-
   boxes = cached_boxes()
 
   add_toolboxes boxes, ->
@@ -366,8 +376,10 @@ within 'workspace', ->
       $("\##{info.targetId}").find("input[name=#{targetParamName}]").val('').prop 'disabled', true
       return true
 
-
-    restore_workspace()
+    if typeof(_action) != 'undefined'
+      eval "#{_action}('#{_pid}')"
+    else
+      restore_workspace()
 
 
     $('.tool-groups a.tool-link').click ->
