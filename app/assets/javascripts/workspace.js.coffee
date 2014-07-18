@@ -4,10 +4,10 @@ hightest_zIndex = 50
 toolbox_offset = 0
 
 
-init_cache = ->
-  if not localStorage.boxes
+init_cache = (forse=false)->
+  if forse or not localStorage.boxes
     localStorage.boxes = JSON.stringify {}
-  if not localStorage.connections
+  if forse or not localStorage.connections
     localStorage.connections = JSON.stringify []
 
 
@@ -25,6 +25,12 @@ load = (pid)->
     localStorage.connec = data.connections
 
 merge = (pid)->
+
+
+clean_workspace = ->
+  init_cache(true)
+  $('#canvas .toolbox').remove()
+  plumb.deleteEveryEndpoint()
 
 
 restore_workspace = ->
@@ -283,6 +289,9 @@ within 'workspace', ->
       dia.showModal()
 
     return false
+
+
+  $('.center .clean').click clean_workspace
 
 
   $('.tool-groups h5').click ->
