@@ -9,6 +9,20 @@ class Admin::ToolGroupsController <  Admin::ApplicationController
     redirect_to action: 'index'
   end
 
+
+  def edit
+    @group = ToolGroup.find params['id']
+    render layout: nil
+  end
+
+
+  def update
+    @group = ToolGroup.find params['id']
+    @group.update params.require('tool_group').permit!
+    redirect_to action: 'index'
+  end
+
+
   def destroy
     group = ToolGroup.find params['id']
 
