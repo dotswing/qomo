@@ -13,6 +13,7 @@
   - @form_path = [@tool]
 
 = form_for @form_path, html: {id: 'form-tool', class: 'ui form grid segment'} do |f|
+  = f.hidden_field :id
   .seven.wide.column
     fieldset
       legend Basic
@@ -37,25 +38,23 @@
 
       fieldset
         legend Attachments
-        #uploader
-          i.fa.fa-cloud-upload
-          '  Dropthem here or
-          a
-            | select one
-            input type='file'
-            | .
+
+        #uploader data-endpoint=uploadfile_admin_tool_path(@tool)
 
         table.ui.table.compact.segment
           tr
             th File Name
             th Size
+            th
 
-          = empty_row @tool.files, 2
+          = empty_row @tool.files, 3
           - for file in @tool.files
             tr
-              td = file[:name]
-              td
+              td width='70%'
+                = file[:name]
+              td width='20%'
                 = number_to_human_size(file [:size])
+              td width='10%'
                 a.icon-button.remove-tr href='javascript:;'
                   i.fa.fa-trash-o
 
@@ -104,3 +103,29 @@ script#tpl_tr_option type='text/html'
 - for type in %w[input string bool select path output]
   script id="tpl_param_#{type}" type='text/html'
     = render partial: "admin/tools/param_#{type}", locals: {param: {'type' => type}}
+
+script#qq-template type='text/html'
+  .qq-uploader-selector.qq-uploader
+    .qq-upload-drop-area-selector.qq-upload-drop-area qq-hide-dropzone=""
+      span Drop files here to upload
+
+    .qq-upload-button-selector.ui.button.teal.small
+      | Upload
+
+    span.qq-drop-processing-selector.qq-drop-processing
+      span Processing dropped files...
+      span.qq-drop-processing-spinner-selector.qq-drop-processing-spinner
+    ul.qq-upload-list-selector.qq-upload-list
+      li
+        .qq-progress-bar-container-selector
+          .qq-progress-bar-selector.qq-progress-bar
+        span.qq-upload-spinner-selector.qq-upload-spinner
+        span.qq-edit-filename-icon-selector.qq-edit-filename-icon
+        span.qq-upload-file-selector.qq-upload-file
+        input.qq-edit-filename-selector.qq-edit-filename tabindex="0" type="text"
+          span.qq-upload-size-selector.qq-upload-size
+          a.qq-upload-cancel-selector.qq-upload-cancel href="#"  Cancel
+          a.qq-upload-retry-selector.qq-upload-retry href="#"  Retry
+          a.qq-upload-delete-selector.qq-upload-delete href="#"  Delete
+          span.qq-upload-status-text-selector.qq-upload-status-text
+

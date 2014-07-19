@@ -35,6 +35,9 @@ window.App =
   guid: ->
     new GUID().create()
 
+  token: ->
+    $('meta[name=csrf-token]').attr('content')
+
 
 window.within = (scope, fn)->
   App.scopes[scope] = fn

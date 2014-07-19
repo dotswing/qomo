@@ -1,7 +1,19 @@
+#= require 'fine-uploader'
+
 within 'tools', ->
   $('.save-tool').click ->
     $form = $('#form-tool')
     $form.submit()
+
+
+  endpoint = $('#uploader').data 'endpoint'
+  $('#uploader').fineUploader
+    request:
+      inputName: 'file'
+      filenameParam: 'filename'
+      endpoint: endpoint
+      params:
+        authenticity_token: App.token()
 
 
   $(document).on 'click', '.params .edit-options', ->

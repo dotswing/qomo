@@ -7,18 +7,22 @@ class Admin::ToolsController <  Admin::ApplicationController
 
   def new
     @tool = Tool.new
-    @tool.initdir
+    @tool.init
     @groups = ToolGroup.all
   end
 
 
   def create
     tool = Tool.new params.require(:tool).permit!
-    tool.id = SecureRandom.uuid
     tool.dirname = tool.id
     tool.owner = current_user
     tool.active!
     tool.save
+
+    if File.exist? tool.dirpath_tmp
+      FileUtils.mv tool.dirpath_tmp, tool.dirpath
+    end
+
     redirect_to action: 'edit', id: tool.id
   end
 
@@ -46,6 +50,24 @@ class Admin::ToolsController <  Admin::ApplicationController
   def delete
     Tool.delete params['ids']
     redirect_to action: 'index'
+  end
+
+
+  def uploadfile
+    tool = Tool.find_by_id params['id']
+    unless tool
+      tool = Tool.new
+      tool.init params['id']
+      FileUtils.mkdir_p tool.binpath
+    end
+    FileUtils.cp params['file'].tempfile, File.join(tool.binpath, params['filename'])
+
+    render json: {success: true}
+  end
+
+
+  def deletefile
+
   end
 
 end

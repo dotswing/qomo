@@ -17,8 +17,10 @@ class Tool < ActiveRecord::Base
   serialize :params, JSON
 
 
-  def initdir
-    self.dirname = "tmp-" + SecureRandom.uuid
+  def init(id = nil)
+    id = SecureRandom.uuid unless id
+    self.id = id
+    self.dirname = "tmp-#{self.id}"
   end
 
 
@@ -37,9 +39,24 @@ class Tool < ActiveRecord::Base
   end
 
 
+  def dirpath
+    File.join(Settings.home, self.dirname)
+  end
+
+
+  def dirpath_tmp
+    File.join(Settings.home, "tmp-#{self.dirname}")
+  end
+
+
+  def binpath
+    File.join(dirpath, 'bin')
+  end
+
+
   def files
     files = []
-    Dir[File.join(Settings.home, self.dirname, 'bin', '*')].each do |k, v|
+    Dir[File.join(binpath, '*')].each do |k, v|
 
       return if File.directory? k
       files << {name: File.basename(k), size: File.size(k)}

@@ -11,6 +11,8 @@
 /config/settings.yml
 /config/database.yml
 
+/public/assets
+
 .idea
 .DS_store
 npm-debug.log

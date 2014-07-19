@@ -8,6 +8,10 @@ Rails.application.routes.draw do
       collection do
         get 'delete'
       end
+
+      member do
+        post 'uploadfile'
+      end
     end
     resources :tool_groups
     resources :users
