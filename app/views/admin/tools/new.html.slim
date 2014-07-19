@@ -39,7 +39,7 @@
       fieldset
         legend Attachments
 
-        #uploader data-endpoint=uploadfile_admin_tool_path(@tool)
+        #uploader data-endpoint=file_admin_tool_path(@tool)
 
         table.ui.table.compact.segment
           tr
@@ -53,9 +53,9 @@
               td width='70%'
                 = file[:name]
               td width='20%'
-                = number_to_human_size(file [:size])
+                = number_to_human_size(file[:size])
               td width='10%'
-                a.icon-button.remove-tr href='javascript:;'
+                a.icon-button.remove-tr href=file_admin_tool_path(@tool) data-paramfilename=file[:name]
                   i.fa.fa-trash-o
 
   .nine.wide.column

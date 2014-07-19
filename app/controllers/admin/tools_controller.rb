@@ -67,7 +67,13 @@ class Admin::ToolsController <  Admin::ApplicationController
 
 
   def deletefile
-
+    tool = Tool.find_by_id params['id']
+    unless tool
+      tool = Tool.new
+      tool.init params['id']
+    end
+    FileUtils.rm File.join(tool.binpath, params['filename'])
+    render json: {success: true}
   end
 
 end

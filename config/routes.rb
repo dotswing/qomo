@@ -10,7 +10,8 @@ Rails.application.routes.draw do
       end
 
       member do
-        post 'uploadfile'
+        post 'file', action: 'uploadfile'
+        delete 'file', action: 'deletefile'
       end
     end
     resources :tool_groups

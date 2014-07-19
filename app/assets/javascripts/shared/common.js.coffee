@@ -16,8 +16,10 @@ class GUID
 
 window.App =
   scopes: {}
+
   goto: (url) ->
     Turbolinks.visit(url)
+
   open: (url) ->
     window.open(url)
 
@@ -76,7 +78,25 @@ readyFn = ->
 
 
   $(document).on 'click', '.remove-tr', ->
-    $(this).closest('tr').remove()
+    remote = false
+    params = {}
+    $this = $(this)
+    run = ->
+      $this.closest('tr').remove()
+    for k of this.dataset
+      if k.indexOf('param') == 0
+        remote = true
+        params[k.substring('param'.length)] = this.dataset[k]
+
+    if remote
+      $.ajax
+        url: this.href
+        method: 'delete'
+        data: params
+        success: run
+    else
+      run()
+
     return false
 
 
