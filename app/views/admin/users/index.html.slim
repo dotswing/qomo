@@ -12,19 +12,22 @@
 .container-fliud
   table.ui.table.segment.celled.row-selectable
     thead
-      th: input type='checkbox'
+      th
+        input type='checkbox'
       th Username
       th Email
       th Last Sing in IP
       th Last Sign at
       th Lock
+      th Admin
 
     tbody
       - for user in @users
-        tr
+        tr data-uid=user.id
           td: input type='checkbox'
           td = user.username
           td = user.email
           td = user.last_sign_in_ip
           td = user.current_sign_in_at.to_formatted_s(:db)
           td = check_box_tag user, :locked
+          td = check_box_tag 'admin', true, user.admin

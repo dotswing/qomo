@@ -15,7 +15,13 @@ Rails.application.routes.draw do
       end
     end
     resources :tool_groups
-    resources :users
+
+    resources :users do
+      member do
+        put 'admin'
+      end
+    end
+
   end
 
   root 'home#index'

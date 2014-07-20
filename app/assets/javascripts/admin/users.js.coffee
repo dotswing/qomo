@@ -1,3 +1,11 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+within 'users', ->
+  $('input[type=checkbox][name=admin]').click ->
+    uid = $(this).parents('tr').data 'uid'
+    $.ajax
+      url: "/admin/users/#{uid}/admin"
+      method: 'put'
+      data:
+        admin: this.checked
+
+    return true
+
