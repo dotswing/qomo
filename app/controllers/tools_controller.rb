@@ -44,7 +44,7 @@ class ToolsController < ApplicationController
 
   def new
     @tool = Tool.new
-    @tool.initdir
+    @tool.init
     @groups = ToolGroup.all
   end
 
