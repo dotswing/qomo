@@ -51,8 +51,13 @@ class ToolsController < ApplicationController
 
   def edit
     @tool = Tool.find params['id']
-    @groups = ToolGroup.all
-    render 'new'
+    if current_user.id != @tool.owner_id
+      redirect_to status: 401
+    else
+      @groups = ToolGroup.all
+      render 'new'
+    end
+
   end
 
 
