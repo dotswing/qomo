@@ -1,5 +1,5 @@
 #= require jquery-tablesort
-#= require semantic
+#= require semantic/javascript/semantic
 #= require jquery-livequery
 #= require artDialog/dialog
 #= require artDialog/dialog-plus

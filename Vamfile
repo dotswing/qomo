@@ -14,12 +14,11 @@ vam 'jquery-livequery' do
   url 'https://raw.githubusercontent.com/hazzik/livequery/master/dist/jquery.livequery.js', main: true
 end
 
-
 vam 'jquery-layout', 'latest' do
   url "http://layout.jquery-dev.net/lib/js/jquery.layout-#{@version}.js", main: true
 end
 
-vam 'jquery-jsPlumb', '1.6.2' do
+vam 'jquery-jsPlumb', '1.6.4' do
   url "http://jsplumbtoolkit.com/js/jquery.jsPlumb-#{@version}.js", main: true
 end
 
@@ -52,6 +51,17 @@ vam 'jquery-form' do
   url 'https://raw.githubusercontent.com/malsup/form/master/jquery.form.js', main: true
 end
 
-vam 'fine-uploader', version: '5.0.2' do
-  url "http://fineuploader.com/source/all.fineuploader-#{@version}.min.js"
+vam 'jquery-ui', '1.11.1' do
+  url "http://code.jquery.com/ui/#{@version}/jquery-ui.js", main: true
 end
+
+vam 'fine-uploader', version: '5.0.6' do
+  url "http://fineuploader.com/source/all.fineuploader-#{@version}.min.js", main: true
+end
+
+vam 'semantic', github: 'Semantic-Org/Semantic-UI' do
+  local 'build/packaged'
+end
+
+
+
