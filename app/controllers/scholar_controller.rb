@@ -9,14 +9,19 @@ class ScholarController < ApplicationController
 
 
   def do_pubmed_search
-    page = params['page'].to_i
-    unless page > 0
-      page = 1
+    begin
+      page = params['page'].to_i
+      unless page > 0
+        page = 1
+      end
+
+      params['page'] = page
+
+      @result = Qomo::Pubmed.search params['query'], page
+    rescue
+
     end
 
-    params['page'] = page
-
-    @result = Qomo::Pubmed.search params['query'], page
     render 'pubmed_search'
   end
 
