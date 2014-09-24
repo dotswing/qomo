@@ -96,4 +96,19 @@ ActiveRecord::Schema.define(version: 20140413104534) do
   #add_index :users, :confirmation_token,   unique: true
   add_index :users, :unlock_token,         unique: true
 
+
+  create_table :publications_users, id: false do |t|
+    t.uuid :publication_id
+    t.uuid :user_id
+  end
+
+  create_table :publications, id: :uuid do |t|
+    t.string :pmid
+    t.text :title
+    t.text :authors
+    t.text :journal
+    t.date :published_at
+
+  end
+
 end

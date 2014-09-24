@@ -1,0 +1,38 @@
+.container
+  h2 Search PubMed
+
+  = form_tag scholar_pubmed_search_path action: 'post'
+    .ui.fluid.action.input
+      input type='text' placeholder='Search...' name='query' value=params['query']
+      input type='hidden' name='page' value=params['page']
+      .ui.button
+        .fa.fa-search
+
+  - if @result
+    h4 Find #{@result.total} publication(s)
+
+    table.publications.ui.table.segment
+      thead
+        tr
+          th Title
+          th width='100px' Published
+          th
+
+      tbody
+        - for publication in @result.publications
+          tr
+            td
+              a href="http://www.ncbi.nlm.nih.gov/pubmed/#{publication.pmid}" target='_blank'
+                = publication.title
+              .authors = publication.authors
+              .journal
+                = publication.journal
+            td = publication.published_at.to_s :db
+            td
+              a.add href=scholar_publications_add_path(publication.pmid) Add
+
+      tfoot
+        tr
+          td colspan=3
+            a href=scholar_pubmed_search_path Next page
+

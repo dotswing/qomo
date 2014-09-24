@@ -28,6 +28,8 @@ gem 'puma'
 # Misc
 gem 'settingslogic'
 gem 'redcarpet'
+gem 'nokogiri'
+gem 'kaminari'
 
 group :development do
   gem 'spring'

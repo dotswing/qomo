@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   has_many :pipelines
 
+  has_and_belongs_to_many :publications
+
 
   def full_name?
     not (first_name.blank? and last_name.blank?)

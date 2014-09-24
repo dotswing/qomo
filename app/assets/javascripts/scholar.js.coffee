@@ -1,3 +1,7 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+within 'scholar', ->
+  $('table.publications a.add, table.publications a.del').click ->
+    $this = $(this)
+    $.get this.href, ->
+      $this.parents('tr').remove()
+      alert 'Success'
+    false

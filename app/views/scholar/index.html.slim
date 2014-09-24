@@ -1,2 +1,16 @@
-h1 Scholar#index
-p Find me in app/views/scholar/index.html.slim
+.container
+ - unless user_signed_in?
+  p You are not singed in.
+ - else
+  .person
+    .name
+       = current_user.full_name
+       span.title
+         = current_user.title
+    .org = current_user.organization
+
+  h3
+    | Publications
+    a.fa.fa-plus.icon-button href=scholar_pubmed_search_path
+
+  = render 'publications', publications: current_user.publications
