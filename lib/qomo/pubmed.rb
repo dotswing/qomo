@@ -9,10 +9,11 @@ class Qomo::Pubmed
 
 
   def self.search(query, page)
+    page_size = 25
     base_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils'
 
-    retstart = (page - 1) * 10
-    esearch_url =  URI::encode "#{base_url}/esearch.fcgi?db=pubmed&term=#{query}&retmax=10&retstart=#{retstart}"
+    retstart = (page - 1) * page_size
+    esearch_url =  URI::encode "#{base_url}/esearch.fcgi?db=pubmed&term=#{query}&retmax=#{page_size}&retstart=#{retstart}"
     doc = Nokogiri::XML(open esearch_url)
 
     result = new

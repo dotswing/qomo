@@ -1,11 +1,10 @@
 .container
-  h2 Search PubMed
+  h2 Search your publications in PubMed
 
-  = form_tag scholar_pubmed_search_path action: 'post'
+  = form_tag scholar_pubmed_search_do_path, method: 'get'
     .ui.fluid.action.input
       input type='text' placeholder='Search...' name='query' value=params['query']
-      input type='hidden' name='page' value=params['page']
-      .ui.button
+      .ui.button.form-submit
         .fa.fa-search
 
   - if @result
@@ -34,5 +33,5 @@
       tfoot
         tr
           td colspan=3
-            a href=scholar_pubmed_search_path Next page
+            a href=scholar_pubmed_search_do_path(query: params['query'], page: params['page'] + 1) Next page
 

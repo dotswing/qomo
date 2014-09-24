@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   namespace :scholar do
     get :index
     get 'pubmed/search', action: 'pubmed_search'
-    post 'pubmed/search', action: 'do_pubmed_search'
+    get 'pubmed/search/do', action: 'do_pubmed_search'
     get 'publications/:pmid/add', action: 'publications_add', as: 'publications_add'
     get 'publications/:pmid/del', action: 'publications_del', as: 'publications_del'
   end

@@ -72,6 +72,9 @@ readyFn = ->
 
   $('.ui.dropdown').dropdown()
 
+  $('.form-submit').click ->
+    $(this).parents('form').submit()
+
 
   $('.popup[title]').popup
     position: 'bottom center'
