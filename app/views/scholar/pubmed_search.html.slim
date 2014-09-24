@@ -18,6 +18,7 @@
           th
 
       tbody
+        = empty_row @result.publications, 3
         - for publication in @result.publications
           tr
             td
