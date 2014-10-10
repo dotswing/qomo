@@ -30,6 +30,7 @@ gem 'settingslogic'
 gem 'redcarpet'
 gem 'nokogiri'
 gem 'kaminari'
+gem 'webhdfs'
 
 group :development do
   gem 'spring'

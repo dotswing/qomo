@@ -18,7 +18,7 @@
           i.fa.fa-trash-o>
 
       .ui.buttons.teal
-        button.ui.button.tiny title='Upload'
+        a.ui.button.tiny title='Upload' href=datastore_upload_path
           i.fa.fa-upload>
 
       .realm
@@ -44,50 +44,15 @@
             th Format
             th Access
         tbody
-          tr
-            td
-              input type='checkbox'
-            td
-              a href='#' asdsasdasd
-            td 500.0MB
-            td 13:23:11, Jun 12 2014
-            td TEXT
-            td Public
-          tr
-            td
-              input type='checkbox'
-            td
-              a href='#' asdsasdasd
-            td 500.0MB
-            td 13:23:11, Jun 12 2014
-            td TEXT
-            td Public
-          tr
-            td
-              input type='checkbox'
-            td
-              a href='#' asdsasdsf
-            td 500.0MB
-            td 13:23:11, Jun 12 2014
-            td TEXT
-            td Public
-          tr
-            td
-              input type='checkbox'
-            td
-              a href='#' 1234dfs
-            td 500.0MB
-            td 13:23:11, Jun 12 2014
-            td TEXT
-            td Public
-          tr
-            td
-              input type='checkbox'
-            td
-              a href='#' 12344sda
-            td 500.0MB
-            td 13:23:11, Jun 12 2014
-            td TEXT
-            td Public
+          - for file in @files
+            tr
+              td
+                input type='checkbox'
+              td
+                a href='#' = file['pathSuffix']
+              td = number_to_human_size file['length']
+              td = format_timestamp file['modificationTime']
+              td = number_to_human_size file['length']
+              td Public
 
 

@@ -188,6 +188,7 @@ GEM
     uniform_notifier (1.6.2)
     warden (1.2.3)
       rack (>= 1.0)
+    webhdfs (0.5.5)
 
 PLATFORMS
   ruby
@@ -221,3 +222,4 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier
+  webhdfs

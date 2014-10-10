@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
   namespace :datastore do
     get :index
+    get :upload
+    post :upload, action: :upload_do
   end
 
   resources :pipelines do

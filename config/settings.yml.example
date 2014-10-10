@@ -1,8 +1,14 @@
 defaults: &defaults
   home: /var/qomo
   admin:
-    username:
-    email:
+    username: dotswing
+    email: xuxingjian@cbb.big.ac.com
+  hdfs:
+    host: host1
+    user: qomo
+    port: 14000
+    root: /qomo_<%= Rails.env %>
+
 
 development:
   <<: *defaults
