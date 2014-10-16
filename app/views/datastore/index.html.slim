@@ -14,7 +14,7 @@
           i.fa.fa-paste>
 
       .ui.buttons.red
-        button.ui.button.tiny title='Trash'
+        button.ui.button.tiny.trash title='Trash' data-url=datastore_delete_path
           i.fa.fa-trash-o>
 
       .ui.buttons.teal
@@ -45,7 +45,7 @@
             th Access
         tbody
           - for file in @files
-            tr
+            tr data-row-id=file['pathSuffix']
               td
                 input type='checkbox'
               td

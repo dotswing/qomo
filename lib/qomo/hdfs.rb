@@ -34,6 +34,12 @@ module Qomo
       alias :mkdirs :mkdir
 
 
+      def delete(*args)
+        path = rpath args
+        @c.delete path, recursive: true
+      end
+
+
       def rpath(*args)
         args.prepend @root
         args.join '/'

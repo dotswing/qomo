@@ -19,3 +19,9 @@ within 'datastore', ->
 
   $('#trigger-upload').click ->
     uploader.fineUploader 'uploadStoredFiles'
+
+  $('.trash').click ->
+    $.post $(this).data('url'),
+        filenames: App.getSelectedRowIds $('.files')
+      , (data)->
+        window.location.reload()
