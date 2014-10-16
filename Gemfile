@@ -31,6 +31,7 @@ gem 'redcarpet'
 gem 'nokogiri'
 gem 'kaminari'
 gem 'webhdfs'
+gem 'jimson'
 
 group :development do
   gem 'spring'

@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
     current_user.id
   end
 
+
+  def engine
+    Jimson::Client.new Settings.engine.url
+  end
+
   protected
 
   def configure_permitted_parameters

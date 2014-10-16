@@ -35,17 +35,17 @@ class Tool < ActiveRecord::Base
 
 
   def normal_params
-    self.params.reject {|k| ['input', 'output'].include? k['type'].downcase }
-  end
-
-
-  def dirpath
-    File.join(Settings.home, self.dirname)
+    self.params.reject {|k| %w(input output).include? k['type'].downcase }
   end
 
 
   def dirpath_tmp
     File.join(Settings.home, "tmp-#{self.dirname}")
+  end
+
+
+  def dirpath
+    File.join Settings.tools, self.dirname
   end
 
 

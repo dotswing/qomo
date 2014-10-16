@@ -1,5 +1,5 @@
 defaults: &defaults
-  home: /var/qomo
+  home: /home/qomo
   admin:
     username: dotswing
     email: xuxingjian@cbb.big.ac.com
@@ -8,7 +8,11 @@ defaults: &defaults
     user: qomo
     port: 14000
     root: /qomo_<%= Rails.env %>
-
+  job:
+    streaming: hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar
+    common: qomo-common-0.0.1-SNAPSHOT.jar
+  engine:
+    url: http://localhost:8080/jsonrpc
 
 development:
   <<: *defaults

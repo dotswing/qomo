@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   namespace :workspace do
     get :index
+    post :run
     get 'load/:id', action: 'load', as: 'load_pipeline'
     get 'merge/:id', action: 'merge', as: 'merge_pipeline'
   end

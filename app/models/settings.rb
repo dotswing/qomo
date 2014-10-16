@@ -3,4 +3,13 @@ class Settings < Settingslogic
 
   namespace Rails.env
 
+  def self.tools
+    File.join self.home, 'tools'
+  end
+
+
+  def self.lib_path(*path)
+    File.join self.home, 'lib', path
+  end
+
 end

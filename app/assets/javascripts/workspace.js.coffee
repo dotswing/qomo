@@ -351,6 +351,8 @@ within 'workspace', ->
       $ul.slideDown 200
 
 
+
+
   jsPlumb.ready ->
 
     window.plumb = jsPlumb.getInstance
@@ -397,3 +399,14 @@ within 'workspace', ->
         add_toolbox $(box).attr('id'), $(box).data 'tid'
 
       return false
+
+    $('a.run').click ->
+      $.post this.href,
+          boxes: localStorage.boxes
+          connections: localStorage.connections
+        , (data) ->
+          if data.success
+            alert("Pipeline submitted.")
+          else
+            alert("Pipeline has an error: #{data.content}")
+      false
