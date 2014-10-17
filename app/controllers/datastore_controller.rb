@@ -24,4 +24,16 @@ class DatastoreController < ApplicationController
     render json: {success: true}
   end
 
+
+  def download
+    f = hdfs.read uid, params['filename']
+    send_file f, filename: params['filename']
+  end
+
+
+  def view
+    f = hdfs.read uid, params['filename']
+    send_file f, disposition: 'inline', type: 'text/plain'
+  end
+
 end

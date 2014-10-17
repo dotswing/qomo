@@ -49,7 +49,8 @@
               td
                 input type='checkbox'
               td
-                a href='#' = file['pathSuffix']
+                a href="#{datastore_view_path}?filename=#{file['pathSuffix']}" target='_blank'
+                  = file['pathSuffix']
               td = number_to_human_size file['length']
               td = format_timestamp file['modificationTime']
               td = number_to_human_size file['length']

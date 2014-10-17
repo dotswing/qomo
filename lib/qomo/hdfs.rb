@@ -40,6 +40,14 @@ module Qomo
       end
 
 
+      def read(*args)
+        path = rpath args
+        file = Tempfile.new('hdfsfile')
+        `wget -O "#{file.to_path}" "http://#{Settings.hdfs.host}:#{Settings.hdfs.port}/webhdfs/v1#{path}?op=OPEN&user.name=#{Settings.hdfs.user}"`
+        file.to_path
+      end
+
+
       def rpath(*args)
         args.prepend @root
         args.join '/'
