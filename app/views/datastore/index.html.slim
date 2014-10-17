@@ -14,7 +14,7 @@
           i.fa.fa-paste>
 
       .ui.buttons.red
-        button.ui.button.tiny title='Trash'
+        button.ui.button.tiny.trash title='Trash' data-url=datastore_delete_path
           i.fa.fa-trash-o>
 
       .ui.buttons.teal
@@ -45,11 +45,12 @@
             th Access
         tbody
           - for file in @files
-            tr
+            tr data-row-id=file['pathSuffix']
               td
                 input type='checkbox'
               td
-                a href='#' = file['pathSuffix']
+                a href="#{datastore_view_path}?filename=#{file['pathSuffix']}" target='_blank'
+                  = file['pathSuffix']
               td = number_to_human_size file['length']
               td = format_timestamp file['modificationTime']
               td = number_to_human_size file['length']

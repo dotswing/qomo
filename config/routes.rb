@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     get :index
     get :upload
     post :upload, action: :upload_do
+    post :delete
+    get :download
+    get :view
   end
 
   resources :pipelines do
