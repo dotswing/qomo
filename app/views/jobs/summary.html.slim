@@ -1,0 +1,20 @@
+- for summary in @summaries
+  table.ui.table.small.celled.job-summary
+    tr
+      td colspan='2'
+        span.status class=summary['status']
+          = summary['status']
+    tr
+      td Start:
+      td
+        = format_timestamp summary['start_at']
+    tr
+      td End:
+      td
+        = format_timestamp summary['end_at']
+    - for us in summary['units']
+      tr
+        td
+          = us['title']
+        td
+          = us['status']

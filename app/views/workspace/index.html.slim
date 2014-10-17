@@ -12,7 +12,7 @@
           ul
             - for tool in group.tools
               li
-                a.tool-link href=box_tool_path(tool) = tool.title
+                a.tool-link data-tid=tool.id href=box_tool_path(tool) = tool.title
 
 
 .center.qpanel.ui-layout-center
@@ -40,11 +40,7 @@
 .east.qpanel.ui-layout-east
   .header
     .title Job Manager
-  .content
-    ul
-      li asd
-      li asd
-      li s
+  .content.jobs data-url=summary_jobs_path
 
 - if @action
   javascript:

@@ -59,6 +59,7 @@ module ApplicationHelper
 
 
   def format_timestamp(ts)
+    return '' unless ts
     sec = (ts.to_f / 1000).to_s
     DateTime.strptime(sec, '%s').to_s :db
   end

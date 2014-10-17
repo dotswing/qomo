@@ -14,5 +14,8 @@
 /public/assets
 
 .idea
+*.iml
+*.ipr
+*.iws
 .DS_store
 npm-debug.log

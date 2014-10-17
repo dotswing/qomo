@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'jobs/index'
+
   devise_for :users
 
   namespace :admin do
@@ -32,6 +34,14 @@ Rails.application.routes.draw do
     get 'load/:id', action: 'load', as: 'load_pipeline'
     get 'merge/:id', action: 'merge', as: 'merge_pipeline'
   end
+
+
+  resources :jobs do
+    collection do
+      get :summary
+    end
+  end
+
 
   namespace :datastore do
     get :index

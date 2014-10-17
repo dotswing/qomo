@@ -40,11 +40,11 @@ class WorkspaceController < ApplicationController
       end
 
       command = "#{command}"
-      units[k] = {id: k, command: command, wd: tool.dirpath, env: env}
+      units[k] = {id: k, tid: tool.id, command: command, wd: tool.dirpath, env: env}
     end
     pp units
 
-    engine.job_submit MultiJson.encode(units.values)
+    engine.job_submit uid, MultiJson.encode(units.values)
 
     render json: {success: true}
   end

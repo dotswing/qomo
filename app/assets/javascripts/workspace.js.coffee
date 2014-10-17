@@ -351,6 +351,12 @@ within 'workspace', ->
       $ul.slideDown 200
 
 
+  updateJobStatus = ->
+    $('.jobs').load $('.jobs').data('url')
+
+
+  updateJobStatus()
+  setInterval updateJobStatus, 5000
 
 
   jsPlumb.ready ->
@@ -407,6 +413,7 @@ within 'workspace', ->
         , (data) ->
           if data.success
             alert("Pipeline submitted.")
+            updateJobStatus()
           else
             alert("Pipeline has an error: #{data.content}")
       false
