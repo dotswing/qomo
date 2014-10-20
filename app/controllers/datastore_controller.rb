@@ -1,12 +1,14 @@
 class DatastoreController < ApplicationController
 
   def index
-    @files = hdfs.ls uid
+    @dir = params['dir'] || ''
+    @files = hdfs.ls uid, @dir
+
     @files.each do |e|
       if e['type'] == 'DIRECTORY'
         length = 0
         concat = false
-        (hdfs.ls uid, e['pathSuffix']).each do |se|
+        (hdfs.ls uid, @dir, e['pathSuffix']).each do |se|
           if se['pathSuffix'].start_with? 'part-'
             concat = true
             length += se['length']
@@ -41,13 +43,13 @@ class DatastoreController < ApplicationController
 
 
   def download
-    f = hdfs.read uid, params['filename']
+    f = hdfs.read uid, params['dir'], params['filename']
     send_file f, filename: params['filename']
   end
 
 
   def view
-    f = hdfs.read uid, params['filename']
+    f = hdfs.read uid, params['dir'], params['filename']
     send_file f, disposition: 'inline', type: 'text/plain'
   end
 
