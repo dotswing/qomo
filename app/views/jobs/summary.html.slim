@@ -1,20 +1,26 @@
 - for summary in @summaries
   table.ui.table.small.celled.job-summary
     tr
+      td colspan='3'
+        | ID: #{summary['id']}
+    tr
       td colspan='2'
+      td
         span.status class=summary['status']
           = summary['status']
     tr
-      td Start:
-      td
+      td width='35px' Start:
+      td colspan='2'
         = format_timestamp summary['start_at']
+
+    - summary['units'].each_with_index do |us, index|
+      tr
+        td colspan='2'
+          | #{index+1}. #{us['title']}
+        td width='60px'
+          span.status class=summary['status']
+            = us['status']
     tr
       td End:
-      td
+      td width='35px' colspan='2'
         = format_timestamp summary['end_at']
-    - for us in summary['units']
-      tr
-        td
-          = us['title']
-        td
-          = us['status']
