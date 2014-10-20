@@ -18,7 +18,7 @@ module Qomo
 
 
       def ls(*args)
-        @c.list rpath(args)
+        (@c.list rpath(args)).reject { |e| e['pathSuffix'] == '.tmp' }
       end
 
 

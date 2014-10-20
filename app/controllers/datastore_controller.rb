@@ -2,7 +2,6 @@ class DatastoreController < ApplicationController
 
   def index
     @files = hdfs.ls uid
-    pp @files
     @files.each do |e|
       if e['type'] == 'DIRECTORY'
         length = 0

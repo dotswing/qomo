@@ -27,7 +27,7 @@ class WorkspaceController < ApplicationController
       dg.add_edge e['sourceId'], e['targetId']
 
       if boxes[e['sourceId']]['values'][e['sourceParamName']].blank?
-        boxes[e['sourceId']]['values'][e['sourceParamName']] = "tmp-#{SecureRandom.uuid}"
+        boxes[e['sourceId']]['values'][e['sourceParamName']] = File.join '.tmp', SecureRandom.uuid
       end
       pp boxes[e['sourceId']]['values']
       boxes[e['targetId']]['values'][e['targetParamName']] = boxes[e['sourceId']]['values'][e['sourceParamName']]
