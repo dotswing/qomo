@@ -3,6 +3,22 @@ class DatastoreController < ApplicationController
   def index
     @files = hdfs.ls uid
     pp @files
+    @files.each do |e|
+      if e['type'] == 'DIRECTORY'
+        length = 0
+        concat = false
+        (hdfs.ls uid, e['pathSuffix']).each do |se|
+          if se['pathSuffix'].start_with? 'part-'
+            concat = true
+            length += se['length']
+          end
+        end
+        if concat
+          e['length'] = length
+          e['type'] = 'FILE'
+        end
+      end
+    end
   end
 
 

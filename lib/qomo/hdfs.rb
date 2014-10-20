@@ -44,8 +44,28 @@ module Qomo
       def read(*args)
         path = rpath args
         file = Tempfile.new('hdfsfile')
-        `wget -O "#{file.to_path}" "http://#{Settings.hdfs.web.host}:#{Settings.web.hdfs.port}/webhdfs/v1#{path}?op=OPEN&user.name=#{Settings.hdfs.web.user}"`
+        parts = nil
+        if stat(args)['type'] == 'DIRECTORY'
+          parts = []
+          ls(args).each do |e|
+            if e['pathSuffix'].start_with?('part-')
+              parts << File.join(path, e['pathSuffix'])
+            end
+          end
+        else
+          parts = [path]
+        end
+        parts.each do |p|
+          `wget -O - "http://#{Settings.hdfs.web.host}:#{Settings.hdfs.web.port}/webhdfs/v1#{p}?op=OPEN&user.name=#{Settings.hdfs.web.user}" >> "#{file.to_path}"`
+        end
+
         file.to_path
+      end
+
+
+      def stat(*args)
+        path = rpath args
+        @c.stat path
       end
 
 
