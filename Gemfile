@@ -32,6 +32,7 @@ gem 'nokogiri'
 gem 'kaminari'
 gem 'webhdfs'
 gem 'jimson'
+gem 'rgl'
 
 group :development do
   gem 'spring'

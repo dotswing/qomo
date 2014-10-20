@@ -1,18 +1,19 @@
 module Qomo
   module HDFS
 
-    @@client = WebHDFS::Client.new(Settings.hdfs.host, Settings.hdfs.port, Settings.hdfs.user)
+    @@client = WebHDFS::Client.new(Settings.hdfs.web.host, Settings.hdfs.web.port, Settings.hdfs.web.user)
 
     def hdfs
-      Client.new @@client, Settings.hdfs.root
+      Client.new @@client, Settings.hdfs.root, Settings.hdfs.url
     end
 
 
     class Client
 
-      def initialize(c, root)
+      def initialize(c, root, url)
         @c = c
         @root = root
+        @url = url
       end
 
 
@@ -43,7 +44,7 @@ module Qomo
       def read(*args)
         path = rpath args
         file = Tempfile.new('hdfsfile')
-        `wget -O "#{file.to_path}" "http://#{Settings.hdfs.host}:#{Settings.hdfs.port}/webhdfs/v1#{path}?op=OPEN&user.name=#{Settings.hdfs.user}"`
+        `wget -O "#{file.to_path}" "http://#{Settings.hdfs.web.host}:#{Settings.web.hdfs.port}/webhdfs/v1#{path}?op=OPEN&user.name=#{Settings.hdfs.web.user}"`
         file.to_path
       end
 
@@ -58,6 +59,11 @@ module Qomo
         args.prepend uid, @uid
         args.prepend @root
         args.join '/'
+      end
+
+
+      def apath(*args)
+        File.join @url, rpath(args)
       end
 
     end

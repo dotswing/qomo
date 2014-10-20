@@ -28,33 +28,36 @@ namespace :qomo do
 
             params = []
 
-            for p in t['params']
-              param = {}
-              param['type'] = p[0]
-              param['name'] = p[1]['name']
-              param['label'] = p[1]['label']
-              param['value'] = p[1]['value']
+            for k, v in t['params']
+              v = [v] unless v.is_a? Array
+              for tv in v
+                param = {}
+                param['type'] = k
+                param['name'] = tv['name']
+                param['label'] = tv['label']
+                param['value'] = tv['value']
 
-              if param['type'] == 'select'
-                param['options'] = p[1]['option']
+                if k == 'select'
+                  param['options'] = tv['option']
 
-                for o in param['options']
-                  if o['selected'] == 'true'
-                    o['selected'] = true
+                  for o in param['options']
+                    if o['selected'] == 'true'
+                      o['selected'] = true
+                    else
+                      o['selected'] = false
+                    end
+                  end
+
+                  if p[1]['multiple'] == 'true'
+                    param['multiple'] = true
+                    param['separator'] = tv['separator'] || ''
                   else
-                    o['selected'] = false
+                    param['multiple'] = false
                   end
                 end
 
-                if p[1]['multiple'] == 'true'
-                  param['multiple'] = true
-                  param['separator'] = p[1]['separator'] || ''
-                else
-                  param['multiple'] = false
-                end
+                params << param
               end
-
-              params << param
             end
 
             tool.params = params

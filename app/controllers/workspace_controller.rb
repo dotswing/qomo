@@ -1,3 +1,6 @@
+require 'rgl/adjacency'
+require 'rgl/topsort'
+
 class WorkspaceController < ApplicationController
 
   def index
@@ -14,13 +17,23 @@ class WorkspaceController < ApplicationController
     preset['HADOOP_BIN'] = Settings.hadoop.bin
 
     env = {}
-    env['HADOOP_USER_NAME'] = Settings.hdfs.user
+    env['HADOOP_USER_NAME'] = Settings.hdfs.web.user
 
     boxes = JSON.parse params['boxes']
     conns = JSON.parse params['connections']
+
+    dg=RGL::DirectedAdjacencyGraph.new
+    conns.each do |e|
+      dg.add_edge e['sourceId'], e['targetId']
+
+      if boxes[e['sourceId']]['values'][e['sourceParamName']].blank?
+        boxes[e['sourceId']]['values'][e['sourceParamName']] = "tmp-#{SecureRandom.uuid}"
+      end
+      pp boxes[e['sourceId']]['values']
+      boxes[e['targetId']]['values'][e['targetParamName']] = boxes[e['sourceId']]['values'][e['sourceParamName']]
+    end
+
     units = {}
-    pp boxes
-    pp conns
 
     boxes.each do |k, v|
       tool = Tool.find v['tid']
@@ -33,18 +46,24 @@ class WorkspaceController < ApplicationController
           end
           va = va.join separator
         end
-        if %w(input output).include? ka
-          va = hdfs.rpath uid, va
+        tool.params.each do |e|
+          if e['name'] == ka
+            if %w(input output).include? e['type']
+              va = hdfs.apath uid, va
+            end
+          end
         end
+
         command.gsub! /\#{#{ka}}/, va.to_s
       end
 
       command = "#{command}"
       units[k] = {id: k, tid: tool.id, command: command, wd: tool.dirpath, env: env}
     end
-    pp units
 
-    engine.job_submit uid, MultiJson.encode(units.values)
+    ordere_units = dg.topsort_iterator.to_a.collect {|e| units[e]}
+
+    engine.job_submit uid, MultiJson.encode(ordere_units)
 
     render json: {success: true}
   end

@@ -12,7 +12,7 @@ defaults: &defaults
     streaming: hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar
     common: qomo-common-0.0.1-SNAPSHOT.jar
   engine:
-    url: http://localhost:8080/jsonrpc
+    url: http://host2:7020/jsonrpc
 
 development:
   <<: *defaults
