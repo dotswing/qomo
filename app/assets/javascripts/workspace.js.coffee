@@ -282,6 +282,7 @@ remove_toolbox = ($box)->
 
   connections = cached_connections()
   for connection, i in connections
+    continue unless connection
     if bid in [connection.sourceId, connection.targetId]
       connections.splice i, 1
   save_cached_connections(connections)
