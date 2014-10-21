@@ -358,6 +358,10 @@ within 'workspace', ->
   updateJobStatus()
   setInterval updateJobStatus, 5000
 
+  $('.job-summary .refresh').click ->
+    updateJobStatus()
+    return false
+
 
   jsPlumb.ready ->
 
