@@ -2,7 +2,9 @@
   table.ui.table.small.celled.job
     tr
       td colspan='3'
-        | ID: #{summary['id']}
+        ' ID:
+        a href=datastore_index_path(dir: "job-#{summary['id']}")
+          = summary['id']
     tr
       td colspan='2'
       td
