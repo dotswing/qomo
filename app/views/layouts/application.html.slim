@@ -41,7 +41,7 @@ html lang='en'
               a.item href='#' Tutorial
               a.item href='#' Support
               a.item href='#' Agreement
-              a.item href='#' About
+              a.item href=help_about_path About
 
       .right.menu
         - if user_signed_in?
@@ -74,3 +74,9 @@ html lang='en'
         = yield :main
       - else
         = yield
+
+    footer#footer
+      .copyright
+        ' Copyright &copy; 2012-2014
+        a href=help_about_path The QOMO Consortium
+        '. All Rights Reserved.

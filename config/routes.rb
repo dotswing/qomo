@@ -90,5 +90,10 @@ Rails.application.routes.draw do
     put 'security', to: 'security#update'
   end
 
+
+  namespace :help do
+    get 'about'
+  end
+
 end
 
