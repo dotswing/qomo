@@ -35,7 +35,7 @@ class Tool < ActiveRecord::Base
 
 
   def normal_params
-    self.params.reject {|k| %w(input output).include? k['type'].downcase }
+    self.params.reject {|k| %w(input output tmp).include? k['type'].downcase }
   end
 
 

@@ -52,6 +52,7 @@
             th Modified
             th Access
         tbody
+          = empty_row @files, 5
           - for file in @files
             - if file['type'] == 'DIRECTORY'
               tr data-row-id=file['pathSuffix']

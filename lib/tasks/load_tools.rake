@@ -48,7 +48,7 @@ namespace :qomo do
                     end
                   end
 
-                  if p[1]['multiple'] == 'true'
+                  if tv['multiple'] and tv['multiple'] == 'true'
                     param['multiple'] = true
                     param['separator'] = tv['separator'] || ''
                   else

@@ -33,13 +33,20 @@ class WorkspaceController < ApplicationController
     #Fill the blank output param
     boxes.each do |k, v|
       tool = Tool.find v['tid']
-      v['values'].each do |ka, va|
-        tool.params.each do |e|
-          if e['name'] == ka and e['type'] == 'output'
-            if va.blank?
-              boxes[k]['values'][ka] = File.join '.tmp', SecureRandom.uuid
-            else
-              boxes[k]['values'][ka] = File.join job_output_dir(jid), va
+
+      tool.params.each do |e|
+        if e['type'] == 'tmp'
+          boxes[k]['values'][e['name']] = File.join '.tmp', SecureRandom.uuid
+        end
+
+        v['values'].each do |ka, va|
+          if e['name'] == ka
+            if e['type'] == 'output'
+              if va.blank?
+                boxes[k]['values'][ka] = File.join '.tmp', SecureRandom.uuid
+              else
+                boxes[k]['values'][ka] = File.join job_output_dir(jid), va
+              end
             end
           end
         end
@@ -74,6 +81,8 @@ class WorkspaceController < ApplicationController
               when 'input'
                 va = hdfs.apath uid, va
               when 'output'
+                va = hdfs.apath uid, va
+              when 'tmp'
                 va = hdfs.apath uid, va
             end
 
