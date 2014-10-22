@@ -93,6 +93,8 @@ Rails.application.routes.draw do
 
   namespace :help do
     get 'about'
+    get 'agreement'
+    get 'tutorial'
   end
 
 end
