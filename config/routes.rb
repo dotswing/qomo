@@ -57,6 +57,10 @@ Rails.application.routes.draw do
       get 'my'
     end
 
+    member do
+      get 'mark_public'
+    end
+
   end
 
   resources :tools do

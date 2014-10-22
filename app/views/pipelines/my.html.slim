@@ -1,10 +1,12 @@
 - content_for :content
   table.ui.table.segment.padded
     thead
-      th width='60%'
+      th width='55%'
         | Title
       th width='15%'
         | Updated at
+      th width='5%'
+        | Public
       th width='25%'
         | Operation
 
@@ -12,9 +14,11 @@
       = empty_row @pipelines, 3
 
       - for pipeline in @pipelines
-        tr
+        tr data-pid=pipeline.id
           td = pipeline.title
           td = pipeline.updated_at.to_s(:db)
+          td
+            input.mark-public type='checkbox' checked=pipeline.public data-url=mark_public_pipeline_path(pipeline)
           td
             .ui.buttons
               a.ui.button.tiny.teal.load href=workspace_load_pipeline_path(pipeline) Load

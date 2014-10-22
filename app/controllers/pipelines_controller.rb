@@ -54,4 +54,12 @@ class PipelinesController < ApplicationController
     redirect_to action: 'my'
   end
 
+
+  def mark_public
+    pipeline = Pipeline.find params['id']
+    pipeline.public = (params['public'] == 'true')
+    pipeline.save
+    render json: {success: true}
+  end
+
 end

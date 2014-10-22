@@ -19,3 +19,13 @@ within 'pipelines', ->
         dia.showModal()
 
     return false
+
+
+  $('.mark-public').click ->
+    $.get $(this).data('url'),
+        public: this.checked
+      , (result)->
+        if result.success
+          alert 'Mark success!'
+        else
+          alert 'Got an error when mark public pipeline.'

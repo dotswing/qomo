@@ -11,10 +11,13 @@
         | Operation
 
     tbody
-      = empty_row @tools, 4
+      = empty_row @pipelines, 4
       - for pipeline in @pipelines
         tr
           td = pipeline.title
           td = user_tag pipeline.owner
           td = pipeline.updated_at.to_s(:db)
           td
+            .ui.buttons
+              a.ui.button.tiny.teal.load href=workspace_load_pipeline_path(pipeline) Load
+              a.ui.button.tiny.teal.merge href=workspace_merge_pipeline_path(pipeline) Merge
