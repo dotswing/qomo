@@ -15,9 +15,12 @@ table.publications.ui.table.segment
           .authors = publication.authors
           .journal
             = publication.journal
-        td = publication.published_at.to_s :db
-        td width='50px'
-          - if publication.users.include? current_user
-            a.del href=scholar_publications_del_path(publication.pmid) Del
-          - else
-            a.add href=scholar_publications_add_path(publication.pmid) Add
+        td
+          = publication.published_at.to_s :db
+
+        td
+          - if user.id == current_user.id
+            - if publication.users.include? current_user
+              a.del href=scholar_publications_del_path(publication.pmid) Del
+            - else
+              a.add href=scholar_publications_add_path(publication.pmid) Add

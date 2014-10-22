@@ -4,13 +4,14 @@
  - else
   .person
     .name
-       = current_user.full_name
+       = @user.full_name
        span.title
-         = current_user.title
-    .org = current_user.organization
+         = @user.title
+    .org = @user.organization
 
   h3
     | Publications
-    a.fa.fa-plus.icon-button href=scholar_pubmed_search_path
+    - if @user.id == current_user.id
+      a.fa.fa-plus.icon-button href=scholar_pubmed_search_path
 
-  = render 'publications', publications: current_user.publications
+  = render 'publications', publications: @user.publications, user: @user

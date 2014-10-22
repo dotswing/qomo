@@ -47,7 +47,7 @@ module ApplicationHelper
 
 
   def user_tag(user)
-    content_tag :a, user.full_name? ? user.full_name : user.username, href: '#'
+    content_tag :a, user.full_name? ? user.full_name : user.username, href: scholar_user_path(user.id)
   end
 
 

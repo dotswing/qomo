@@ -80,6 +80,7 @@ Rails.application.routes.draw do
 
   namespace :scholar do
     get :index
+    get 'user/:id', action: 'user', as: 'user'
     get 'pubmed/search', action: 'pubmed_search'
     get 'pubmed/search/do', action: 'do_pubmed_search'
     get 'publications/:pmid/add', action: 'publications_add', as: 'publications_add'

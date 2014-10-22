@@ -1,6 +1,13 @@
 class ScholarController < ApplicationController
 
   def index
+    @user = current_user
+  end
+
+
+  def user
+    @user = User.find params['id']
+    render 'index'
   end
 
 
