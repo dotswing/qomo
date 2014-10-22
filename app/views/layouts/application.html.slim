@@ -8,8 +8,8 @@ html lang='en'
 
   body id="#{controller_name}-#{action_name}"
     nav#header.ui.menu.inverted
-      a.item href=root_path
-        | QOMO
+      a.item.logo href=root_path
+        img width='70px' height='30px' src=image_path('logo.png')
 
       .center
         a.item class=active_class('workspace', 'active teal') href=workspace_index_path
