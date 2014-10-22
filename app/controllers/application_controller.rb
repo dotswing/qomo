@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   def prepare_hdfs
     if user_signed_in?
-      hdfs.mkdir(current_user.id)
+      hdfs.umkdir uid
     end
   end
 

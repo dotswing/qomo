@@ -22,8 +22,18 @@ module Qomo
       end
 
 
+      def uls(uid, *args)
+        ls(upath uid, args)
+      end
+
+
       def create(local, *args)
+        pp rpath(*args)
         @c.create rpath(*args), local
+      end
+
+      def ucreate(uid, local, *args)
+        create(local, upath(uid, args))
       end
 
 
@@ -32,12 +42,20 @@ module Qomo
         @c.mkdirs path
       end
 
-      alias :mkdirs :mkdir
+
+      def umkdir(uid, *args)
+        mkdir(upath uid, args)
+      end
 
 
       def delete(*args)
         path = rpath args
         @c.delete path, recursive: true
+      end
+
+
+      def udelete(uid, *args)
+        delete(upath uid, args)
       end
 
 
@@ -63,27 +81,50 @@ module Qomo
       end
 
 
+      def uread(uid, *args)
+        read(upath uid, args)
+      end
+
+
       def stat(*args)
         path = rpath args
         @c.stat path
       end
 
 
+      def ustat(uid, *args)
+        stat(upath uid, args)
+      end
+
+
       def rpath(*args)
-        args.prepend @root
+        args.unshift @root
         args.join '/'
       end
 
 
+      def upath(uid, *args)
+        args.unshift uid
+        args.unshift 'users'
+        File.join args
+      end
+
+
       def urpath(uid, *args)
-        args.prepend uid, @uid
-        args.prepend @root
-        args.join '/'
+        args.unshift uid
+        args.unshift 'users'
+        args.unshift @root
+        File.join args
       end
 
 
       def apath(*args)
         File.join @url, rpath(args)
+      end
+
+
+      def uapath(uid, *args)
+        File.join @url, urpath(uid, args)
       end
 
     end

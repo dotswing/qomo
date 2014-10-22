@@ -14,7 +14,7 @@ class WorkspaceController < ApplicationController
     #Job id
     jid = SecureRandom.uuid
 
-    output_prefix = File.join uid, job_output_dir(jid)
+    output_prefix = hdfs.upath uid, job_output_dir(jid)
     hdfs.mkdir output_prefix
 
     preset = {}
@@ -79,11 +79,11 @@ class WorkspaceController < ApplicationController
           if e['name'] == ka
             case e['type']
               when 'input'
-                va = hdfs.apath uid, va
+                va = hdfs.uapath uid, va
               when 'output'
-                va = hdfs.apath uid, va
+                va = hdfs.uapath uid, va
               when 'tmp'
-                va = hdfs.apath uid, va
+                va = hdfs.uapath uid, va
             end
 
           end
