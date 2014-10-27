@@ -30,27 +30,22 @@
           .active.section href=datastore_index_path(dir: @dir)
             = @dir
 
-      .realm
-        label> Realm:
-        .ui.inline.dropdown
-          .text Local
-          i.fa.fa-caret-down>
-          .menu
-            .item Local
-            .item FTP
-            .item Public
-
 
   .content
     .container
       table.ui.table.segment.celled.row-selectable.sortable.files data-dir=@dir
         thead
           tr
-            th: input type='checkbox'
-            th.ascending File Name
-            th Size
-            th Modified
-            th Access
+            th
+              input type='checkbox'
+            th.ascending
+              | File Name
+            th width='80px'
+              | Size
+            th width='160px'
+              | Modified
+            th width='80px'
+              | Public
         tbody
           = empty_row @files, 5
           - for file in @files
@@ -75,6 +70,7 @@
                     = file['pathSuffix']
                 td = number_to_human_size file['length']
                 td = format_timestamp file['modificationTime']
-                td Public
+                td
+                  input.mark type='checkbox' data-url=datastore_mark_public_path(dir: @dir, filename: file['pathSuffix']) checked=file['meta'].pub
 
 

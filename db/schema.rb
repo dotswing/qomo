@@ -111,4 +111,11 @@ ActiveRecord::Schema.define(version: 20140413104534) do
 
   end
 
+
+  create_table :file_meta do |t|
+    t.string :path, null: false
+    t.boolean :pub
+
+  end
+
 end

@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     post :delete
     get :download
     get :view
+    get :mark_public
   end
 
   resources :pipelines do

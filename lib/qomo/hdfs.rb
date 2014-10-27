@@ -59,6 +59,12 @@ module Qomo
       end
 
 
+      def ln(f, t)
+        c = "curl -i -X PUT \"http://#{Settings.hdfs.web.host}:#{Settings.hdfs.web.port}/#{f}?op=CREATESYMLINK&destination=#{t}&createParent=true&user.name=#{Settings.hdfs.web.user}\""
+        pp c
+      end
+
+
       def read(*args)
         path = rpath args
         file = Tempfile.new('hdfsfile')

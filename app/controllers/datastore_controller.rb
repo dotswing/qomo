@@ -5,6 +5,9 @@ class DatastoreController < ApplicationController
     @files = hdfs.uls uid, @dir
 
     @files.each do |e|
+      meta = FileMeta.find_by_path hdfs.upath(uid, @dir, e['pathSuffix'])
+      meta ||= FileMeta.new
+      e['meta'] = meta
       if e['type'] == 'DIRECTORY'
         length = 0
         concat = false
@@ -51,6 +54,22 @@ class DatastoreController < ApplicationController
   def view
     f = hdfs.uread uid, params['dir'], params['filename']
     send_file f, disposition: 'inline', type: 'text/plain'
+  end
+
+
+  def mark_public
+    fp = hdfs.upath uid, params['dir'], params['filename']
+    if params['mark'] == 'true'
+      meta = FileMeta.find_or_create_by path: fp
+      meta.pub = true
+      meta.save
+    else
+      meta = FileMeta.find_by path: fp
+      meta.pub = false
+      meta.save
+    end
+
+    render json: {success: true}
   end
 
 end

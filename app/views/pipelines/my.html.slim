@@ -18,7 +18,7 @@
           td = pipeline.title
           td = pipeline.updated_at.to_s(:db)
           td
-            input.mark-public type='checkbox' checked=pipeline.public data-url=mark_public_pipeline_path(pipeline)
+            input.mark type='checkbox' checked=pipeline.public data-url=mark_public_pipeline_path(pipeline)
           td
             .ui.buttons
               a.ui.button.tiny.teal.load href=workspace_load_pipeline_path(pipeline) Load

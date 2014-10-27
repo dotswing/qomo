@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
   def prepare_hdfs
     if user_signed_in?
       hdfs.umkdir uid
+      hdfs.umkdir 'public', uid
     end
   end
 

@@ -79,6 +79,15 @@ readyFn = ->
   $('.popup[title]').popup
     position: 'bottom center'
 
+  $('input[type=checkbox].mark').click ->
+    $.get $(this).data('url'),
+      mark: this.checked
+    , (result)->
+      if result.success
+        alert 'Mark success!'
+      else
+        alert 'Got an error when mark.'
+
 
   $(document).on 'click', '.remove-tr', ->
     remote = false
