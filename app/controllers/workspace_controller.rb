@@ -64,7 +64,6 @@ class WorkspaceController < ApplicationController
     boxes.each do |k, v|
       tool = Tool.find v['tid']
       command = tool.command.dup
-      pp command
 
       preset.merge(v['values']).each do |ka, va|
         if va.kind_of? Array
@@ -79,7 +78,14 @@ class WorkspaceController < ApplicationController
           if e['name'] == ka
             case e['type']
               when 'input'
-                va = hdfs.uapath uid, va
+                if va.start_with? '@'
+                  username = va[1, va.index(':')-1]
+                  user = User.find_by username: username
+                  va = hdfs.uapath user.id, va[va.index(':')+1 .. -1]
+                else
+                  va = hdfs.uapath uid, va
+                end
+
               when 'output'
                 va = hdfs.uapath uid, va
               when 'tmp'

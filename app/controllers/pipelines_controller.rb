@@ -43,9 +43,20 @@ class PipelinesController < ApplicationController
 
 
   def update
-    Pipeline.find(params['id']).update(params.require('pipeline').permit!)
+    pipeline = Pipeline.find params['id']
+    pipeline.update(params.require('pipeline').permit!)
 
-    redirect_to action: 'my'
+    if pipeline.public
+      polish_params pipeline
+      pipeline.save
+    end
+
+
+    respond_to do |format|
+      format.html {redirect_to action: 'my'}
+      format.json { render json: {success: true} }
+    end
+
   end
 
 
@@ -58,8 +69,28 @@ class PipelinesController < ApplicationController
   def mark_public
     pipeline = Pipeline.find params['id']
     pipeline.public = (params['mark'] == 'true')
+    polish_params pipeline
     pipeline.save
     render json: {success: true}
+  end
+
+
+  protected
+
+  def polish_params(pipeline)
+    jb = JSON.parse(pipeline.boxes)
+    jb.each do |k, v|
+      tool = Tool.find v['tid']
+      tool.inputs.each do |tp|
+        v['values'].each do |pk, pv|
+          if tp['name'] == pk and (not pv.blank?) and (not pv.start_with? '@')
+            jb[k]['values'][pk] = "@#{current_user.username}:#{pv}"
+          end
+        end
+      end
+    end
+    pipeline.boxes = JSON.dump jb
+    pipeline.save
   end
 
 end

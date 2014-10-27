@@ -21,7 +21,7 @@
       | Pipeline
     a.pipeline-title href='#'
     .ui.buttons.teal
-      a.ui.button.tiny.save href=new_pipeline_path
+      a.ui.button.tiny.save href=new_pipeline_path(format: :json)
         i.fa.fa-save>
         ' Save
       a.ui.button.tiny.run href=workspace_run_path
