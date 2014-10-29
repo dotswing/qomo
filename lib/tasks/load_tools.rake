@@ -37,6 +37,11 @@ namespace :qomo do
                 param['label'] = tv['label']
                 param['value'] = tv['value']
 
+                if %w{input output}.include? k
+                  param['local'] = tv['local'] == 'true'
+                end
+
+
                 if k == 'select'
                   param['options'] = tv['option']
 
