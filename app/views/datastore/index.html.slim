@@ -25,10 +25,16 @@
         .ui.breadcrumb
           a.section href=datastore_index_path
             i.fa.fa-home
-          .divider
-            | /
-          .active.section href=datastore_index_path(dir: @dir)
-            = @dir
+          - lds = @dir.split '/'
+          - lds.each_with_index do |ld, i|
+            .divider
+              | /
+            - if i+1 < lds.length
+              a.active.section href=datastore_index_path(dir: File.join(lds[0..i]))
+                = ld
+            - else
+              .section = ld
+
 
 
   .content
@@ -54,7 +60,7 @@
                 td
                   input type='checkbox'
                 td
-                  a href=datastore_index_path(dir: file['pathSuffix'])
+                  a href=datastore_index_path(dir: File.join(@dir, file['pathSuffix']))
                     i.fa.fa-folder-o.file-icon
                     = file['pathSuffix']
                 td -
