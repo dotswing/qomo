@@ -25,7 +25,7 @@
         .ui.breadcrumb
           a.section href=datastore_index_path
             i.fa.fa-home
-          - lds = @dir.split '/'
+          - lds = @dir[1..-1].split '/'
           - lds.each_with_index do |ld, i|
             .divider
               | /
@@ -46,12 +46,13 @@
               input type='checkbox'
             th.ascending
               | File Name
-            th width='80px'
+            th width='100px'
               | Size
             th width='160px'
               | Modified
             th width='80px'
               | Public
+            th Actions
         tbody
           = empty_row @files, 5
           - for file in @files
@@ -63,6 +64,7 @@
                   a href=datastore_index_path(dir: File.join(@dir, file['pathSuffix']))
                     i.fa.fa-folder-o.file-icon
                     = file['pathSuffix']
+                td -
                 td -
                 td -
                 td -
@@ -78,5 +80,7 @@
                 td = format_timestamp file['modificationTime']
                 td
                   input.mark type='checkbox' data-url=datastore_mark_public_path(dir: @dir, filename: file['pathSuffix']) checked=file['meta'].pub
-
+                td
+                  a href=datastore_download_path(dir: @dir, filename: file['pathSuffix'])
+                    i.fa.fa-download
 
