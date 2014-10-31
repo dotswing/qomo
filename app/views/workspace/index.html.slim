@@ -21,7 +21,7 @@
       | Pipeline
     a.pipeline-title href='#'
     .ui.buttons.teal
-      a.ui.button.tiny.save href=new_pipeline_path(format: :json)
+      a.ui.button.tiny.save href=new_pipeline_path
         i.fa.fa-save>
         ' Save
       a.ui.button.tiny.run href=workspace_run_path
@@ -44,3 +44,7 @@
   javascript:
     _action = "#{@action}"
     _pid = "#{@pid}"
+
+
+script#tpl-filetree type='template/html'
+  .tree

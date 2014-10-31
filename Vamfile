@@ -63,5 +63,8 @@ vam 'semantic', github: 'Semantic-Org/Semantic-UI' do
   local 'build/packaged'
 end
 
+vam 'jstree' do
+  url 'https://github.com/vakata/jstree/raw/master/dist/jstree.min.js', main: true
+end
 
 

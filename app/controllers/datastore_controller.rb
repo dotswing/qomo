@@ -2,6 +2,8 @@ class DatastoreController < ApplicationController
 
   def index
     @dir = params['dir'] || ''
+    @dir = '' if @dir == '#'
+
     @files = hdfs.uls uid, @dir
 
     @files.each do |e|
@@ -23,6 +25,22 @@ class DatastoreController < ApplicationController
         end
       end
     end
+
+    respond_to do |format|
+      format.html
+      format.json do
+        files_tree = @files.collect do |e|
+          {
+              text: e['pathSuffix'],
+              id: @dir.blank? ? e['pathSuffix'] : File.join(@dir, e['pathSuffix']),
+              children: e['type'] == 'DIRECTORY',
+              icon: e['type'] == 'DIRECTORY' ? 'fa fa-folder' : 'fa fa-file-o'
+          }
+        end
+        render json: files_tree
+      end
+    end
+
   end
 
 

@@ -10,7 +10,7 @@
       - for input in box[:tool].inputs
         tr.input.param data-paramname=input['name']
           td: label = input['label']
-          td: input.value type='text' name=input['name'] value=input['value']
+          td: input.value.input type='text' name=input['name'] value=input['value']
 
       - for param in box[:tool].normal_params
         = render partial: 'param', locals: {param: param}
@@ -18,4 +18,4 @@
       - if box[:tool].output
         tr.output.param  data-paramname=box[:tool].output['name']
           td: label = box[:tool].output['label']
-          td: input.value type='text' name=box[:tool].output['name'] value=box[:tool].output['value']
+          td: input.value.output type='text' name=box[:tool].output['name'] value=box[:tool].output['value']

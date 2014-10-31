@@ -11,6 +11,8 @@
 #= require turbolinks
 #= require chosen
 
+#//=require jstree
+
 
 #= require_directory ./shared
 #= require_self

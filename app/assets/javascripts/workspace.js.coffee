@@ -220,6 +220,37 @@ init_box = (box_html, bid, position)->
       else
         $(this).val value
 
+      # Open a file select dialog when click input component
+      if $(this).hasClass('input')
+        _this = $(this)
+        window.filetree = null
+        $(this).click ->
+          did = App.guid()
+          dia = dialog
+            id: did
+            title: 'Select File'
+            content: $('#tpl-filetree').html()
+            width: 700
+            okValue: 'OK'
+            ok: ->
+              value = window.filetree.get_selected(false).join(' ')
+              _this.val value
+              return true
+            cancelValue: 'Cancel'
+            cancel: ->
+          dia.showModal()
+          window.filetree = $.jstree.create document.getElementById("content:#{did}"),
+            core:
+              animation: 0
+              themes:
+                stripes: true
+              data:
+                url: (node) ->
+                  '/datastore/index.json'
+                data: (node) ->
+                  'dir' : node.id
+
+
       $(this).change ->
         boxes = cached_boxes()
         value = $(this).val()
@@ -310,7 +341,6 @@ within 'workspace', ->
 
   $('.center .save').click ->
     if get_pid() != null
-
       $.get "/pipelines/#{get_pid()}/edit", (data)->
         $form =$(data)
         populate_pform $form
@@ -357,7 +387,7 @@ within 'workspace', ->
 
 
   updateJobStatus()
-  setInterval updateJobStatus, 5000
+  setInterval updateJobStatus, 10000
 
   $('.job-summary .refresh').click ->
     updateJobStatus()
