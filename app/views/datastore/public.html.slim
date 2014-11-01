@@ -2,43 +2,32 @@
   .header.tab-menu-wapper
     .container
       .ui.pointing.secondary.menu
-        a.item.red.active href=datastore_index_path My files
-        a.item.red href=datastore_public_path Public files
+        a.item.red href=datastore_index_path My files
+        a.item.red.active href=datastore_public_path Public files
 
-      - unless @dir.blank?
-        .ui.breadcrumb
-          - lds = @dir[1..-1].split '/'
-          - lds.each_with_index do |ld, i|
-            - if i != 0
-              .divider
-                | /
-            - if i+1 < lds.length
-              a.active.section href=datastore_index_path(dir: File.join(lds[0..i]))
-                = ld
-            - else
-              .section = ld
+  .container
+    = form_tag datastore_public_path, method: 'post', class: 'ui small form'
+      .three.fields
+        .field
+          label Username:
+          .ui.left.icon.input
+            input type='text' placeholder='Username' name='username' value=params['username']
+            i.fa.fa-users.icon
 
-      .toolbar
+        .field
+          label File name keyword:
+          .ui.left.icon.input
+            input type='text' placeholder='File name' name='filename' value=params['filename']
+            i.fa.fa-file.icon
 
-        .ui.buttons.teal
-          a.ui.button.tiny title='Refresh' href=url_for(dir: @dir)
-            i.fa.fa-refresh>
+        .field
+          label Unique file path:
+          .ui.left.icon.input
+            input type='text' placeholder='@username:file/path' name='filepath' value=params['filepath']
+            i.fa.fa-bookmark.icon
 
-        .ui.buttons.teal
-          button.ui.button.tiny title='Copy'
-            i.fa.fa-copy>
-          button.ui.button.tiny title='Cut'
-            i.fa.fa-cut>
-          button.ui.button.tiny title='Paste'
-            i.fa.fa-paste>
+        input.ui.blue.tiny.submit.button type='submit' value='Search'
 
-        .ui.buttons.red
-          button.ui.button.tiny.trash title='Trash' data-url=datastore_delete_path
-            i.fa.fa-trash-o>
-
-        .ui.buttons.teal
-          a.ui.button.tiny title='Upload' href=datastore_upload_path
-            i.fa.fa-upload>
 
   .content
     .container
@@ -53,8 +42,6 @@
               | Size
             th width='160px'
               | Modified
-            th width='80px'
-              | Public
             th Actions
         tbody
           = empty_row @files, 5
@@ -81,8 +68,6 @@
                     = file['pathSuffix']
                 td = number_to_human_size file['length']
                 td = format_timestamp file['modificationTime']
-                td
-                  input.mark type='checkbox' data-url=datastore_mark_public_path(dir: @dir, filename: file['pathSuffix']) checked=file['meta'].pub
                 td
                   a href=datastore_download_path(dir: @dir, filename: file['pathSuffix'])
                     i.fa.fa-download
