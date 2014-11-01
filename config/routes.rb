@@ -45,6 +45,8 @@ Rails.application.routes.draw do
 
   namespace :datastore do
     get :index
+    get :public
+    post :public, action: :public_search
     get :upload
     post :upload, action: :upload_do
     post :delete

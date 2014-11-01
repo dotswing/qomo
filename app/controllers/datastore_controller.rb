@@ -44,6 +44,51 @@ class DatastoreController < ApplicationController
   end
 
 
+  def public
+    @files = []
+  end
+
+
+  def public_search
+    username = params['username']
+    filename = params['filename']
+    filepath = params['filepath']
+
+    @files = []
+
+    if not username.blank?
+      user = User.find_by_username username
+      if user
+        FileMeta.where('path like ? and pub=?', "users/#{user.id}/%", 'true').each do |e|
+          f = hdfs.stat(e.path)
+          f['pathSuffix'] = e.path.split('/')[2..-1].join('/')
+          @files << f
+        end
+      end
+
+    elsif not filename.blank?
+      FileMeta.where('path like ? and pub=?', "%#{filename}%", 'true').each do |e|
+        f = hdfs.stat(e.path)
+        f['pathSuffix'] = e.path.split('/')[2..-1].join('/')
+        @files << f
+      end
+    elsif not filepath.blank?
+      username = filepath[1..filepath.index(':')-1]
+      user = User.find_by_username username
+      path = filepath[filepath.index(':')+1..-1]
+      if user
+        FileMeta.where('path=? and pub=?', "users/#{user.id}/#{path}", 'true').each do |e|
+          f = hdfs.stat(e.path)
+          f['pathSuffix'] = e.path.split('/')[2..-1].join('/')
+          @files << f
+        end
+      end
+    end
+
+    render 'public'
+  end
+
+
   def upload
 
   end
