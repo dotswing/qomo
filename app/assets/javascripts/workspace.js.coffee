@@ -235,6 +235,7 @@ init_box = (box_html, bid, position)->
             ok: ->
               value = window.filetree.get_selected(false).join(' ')
               _this.val value
+              _this.trigger 'change'
               return true
             cancelValue: 'Cancel'
             cancel: ->
