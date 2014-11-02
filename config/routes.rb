@@ -91,8 +91,10 @@ Rails.application.routes.draw do
     get 'publications/:pmid/del', action: 'publications_del', as: 'publications_del'
   end
 
+
   namespace :settings do
     root 'profiles#edit'
+
     resource :profile
 
     get 'security', to: 'security#edit'
