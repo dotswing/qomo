@@ -7,7 +7,7 @@ class DatastoreController < ApplicationController
     @files = hdfs.uls uid, @dir
 
     @files.each do |e|
-      meta = FileMeta.find_by_path hdfs.upath(uid, @dir, e['pathSuffix'])
+      meta = FileMeta.find_by_path hdfs.ppath(uid, @dir, e['pathSuffix'])
       meta ||= FileMeta.new
       e['meta'] = meta
       if e['type'] == 'DIRECTORY'
@@ -59,17 +59,19 @@ class DatastoreController < ApplicationController
     if not username.blank?
       user = User.find_by_username username
       if user
-        FileMeta.where('path like ? and pub=?', "users/#{user.id}/%", 'true').each do |e|
-          f = hdfs.stat(e.path)
-          f['pathSuffix'] = e.path.split('/')[2..-1].join('/')
+        FileMeta.where('path like ? and pub=?', "#{user.id}/%", 'true').each do |e|
+          f = hdfs.stat(File.join 'users', e.path)
+          f['pathSuffix'] = e.path
+          f['path'] = File.join 'public', e.path
           @files << f
         end
       end
 
     elsif not filename.blank?
       FileMeta.where('path like ? and pub=?', "%#{filename}%", 'true').each do |e|
-        f = hdfs.stat(e.path)
-        f['pathSuffix'] = e.path.split('/')[2..-1].join('/')
+        f = hdfs.stat(File.join 'users', e.path)
+        f['pathSuffix'] = e.path
+        f['path'] = File.join 'public', e.path
         @files << f
       end
     elsif not filepath.blank?
@@ -77,9 +79,10 @@ class DatastoreController < ApplicationController
       user = User.find_by_username username
       path = filepath[filepath.index(':')+1..-1]
       if user
-        FileMeta.where('path=? and pub=?', "users/#{user.id}/#{path}", 'true').each do |e|
-          f = hdfs.stat(e.path)
-          f['pathSuffix'] = e.path.split('/')[2..-1].join('/')
+        FileMeta.where('path=? and pub=?', "#{user.id}/#{path}", 'true').each do |e|
+          f = hdfs.stat(File.join 'users', e.path)
+          f['pathSuffix'] = e.path
+          f['path'] = File.join 'public', e.path
           @files << f
         end
       end
@@ -109,19 +112,17 @@ class DatastoreController < ApplicationController
 
 
   def download
-    f = hdfs.uread uid, params['dir'], params['filename']
-    send_file f, filename: params['filename']
+    send_file downloadable_path, filename: params['filename']
   end
 
 
   def view
-    f = hdfs.uread uid, params['dir'], params['filename']
-    send_file f, disposition: 'inline', type: 'text/plain'
+    send_file downloadable_path, disposition: 'inline', type: 'text/plain'
   end
 
 
   def mark_public
-    fp = hdfs.upath uid, params['dir'], params['filename']
+    fp = hdfs.ppath uid, params['dir'], params['filename']
     if params['mark'] == 'true'
       meta = FileMeta.find_or_create_by path: fp
       meta.pub = true
@@ -133,6 +134,30 @@ class DatastoreController < ApplicationController
     end
 
     render json: {success: true}
+  end
+
+
+  protected
+
+  def downloadable_path
+    user_id = ''
+    path = ''
+    if params['path']
+      path = params['path']
+      if path.start_with? 'public'
+        path = path[6..-1]
+        user_id = path.split('/')[0]
+        path = path.split('/')[1..-1].join('/')
+      else
+        user_id = uid
+      end
+
+    else
+      user_id = uid
+      path = File.join params['dir'], params['filename']
+    end
+
+    hdfs.uread user_id, path
   end
 
 end

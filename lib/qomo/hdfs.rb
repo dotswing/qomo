@@ -110,17 +110,17 @@ module Qomo
 
 
       def upath(uid, *args)
-        args.unshift uid
-        args.unshift 'users'
-        File.join args
+        File.join 'users', ppath(uid, *args)
       end
 
 
       def urpath(uid, *args)
-        args.unshift uid
-        args.unshift 'users'
-        args.unshift @root
-        File.join args
+        File.join @root, upath(uid, args)
+      end
+
+
+      def ppath(uid, *args)
+        File.join uid, args
       end
 
 

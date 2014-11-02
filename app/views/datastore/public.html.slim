@@ -63,11 +63,11 @@
                 td
                   input type='checkbox'
                 td
-                  a href=datastore_view_path(dir: @dir, filename: file['pathSuffix']) target='_blank'
+                  a href=datastore_view_path(path: file['path']) target='_blank'
                     i.fa.fa-file-text-o.file-icon
                     = file['pathSuffix']
                 td = number_to_human_size file['length']
                 td = format_timestamp file['modificationTime']
                 td
-                  a href=datastore_download_path(dir: @dir, filename: file['pathSuffix'])
+                  a href=datastore_download_path(path: file['path'], filename: File.basename(file['pathSuffix']))
                     i.fa.fa-download
