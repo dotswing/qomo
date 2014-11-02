@@ -13,7 +13,7 @@
           = f.text_field :login, autofocus: true
         .field
           = f.label :password
-          = f.password_field :password, autocomplete: "off"
+          = f.password_field :password, autocomplete: 'off'
 
         - if devise_mapping.rememberable?
           .field.inline
@@ -22,9 +22,10 @@
               = f.label :remember_me
 
         = f.submit 'Sign in', class: 'ui button teal small'
+        a.ui.button.small.signin_guest href=users_guest_sign_in_path Guest access
 
     .ui.vertical.divider
       | Or
 
     .column.center.aligned
-      = render "devise/shared/links"
+      = render 'devise/shared/links'

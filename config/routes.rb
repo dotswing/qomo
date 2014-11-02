@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
 
-  get 'jobs/index'
-
   devise_for :users
+
+  get 'users/guest_sign_in', to: 'application#guest_sign_in'
 
   namespace :admin do
     root 'tools#index'
+
     resources :tools do
       collection do
         get 'delete'

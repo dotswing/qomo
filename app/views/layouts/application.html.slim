@@ -54,9 +54,10 @@ html lang='en'
               a.item href=settings_root_path
                 i.fa.fa-cog.icon>
                 | Settings
-              a.item href=admin_root_path data-no-turbolink=true
-                i.fa.fa-sitemap.icon>
-                | Admin
+              - if current_user.admin
+                a.item href=admin_root_path data-no-turbolink=true
+                  i.fa.fa-sitemap.icon>
+                  | Admin
               a.item href=destroy_user_session_path data-no-turbolink=true data-method='delete'
                 i.fa.fa-sign-out.icon>
                 | Sign out

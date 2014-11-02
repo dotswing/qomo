@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20140413104534) do
     t.string :location
     t.string :homepage
     t.boolean :admin, default: false
+    t.boolean :guest, default: false
 
     ## Database authenticatable
     t.string :email,              null: false
