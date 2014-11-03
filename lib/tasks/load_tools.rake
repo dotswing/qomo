@@ -6,9 +6,17 @@ namespace :qomo do
       def try_load_tools(dir)
         tools_def = Hash.from_xml File.read(File.join(dir, 'tools.xml'))
 
-        for t in tools_def['tools']
+        tools = tools_def['tools']
+        if tools.has_key? 'tool'
+          tools = tools['tool']
+        end
+
+        tools.each do |t|
           Tool.transaction do
-            t = t[1]
+            if t.is_a? Array
+              t = t[1]
+            end
+
             tool = Tool.new
             unless t.has_key? 'id'
               puts "ATTR id required for this tool: #{dir}"
