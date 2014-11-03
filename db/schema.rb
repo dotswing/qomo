@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140413104534) do
 
     t.string :pid
     t.string :title
+    t.string :contributor
     t.text :desc
 
     t.text :boxes

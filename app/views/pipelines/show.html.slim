@@ -11,7 +11,8 @@
       a.edit href=edit_pipeline_path(@pipeline) Edit
 
   p
-    | Owner: #{user_tag @pipeline.owner}
+    ' Contributor: #{@pipeline.contributor} &nbsp;&nbsp;&nbsp;
+    ' Owner: #{user_tag @pipeline.owner}
 
   p == @pipeline.desc
 

@@ -53,7 +53,7 @@ class PipelinesController < ApplicationController
 
 
     respond_to do |format|
-      format.html {redirect_to action: 'my'}
+      format.html {redirect_to pipeline_path(pipeline)}
       format.json { render json: {success: true} }
     end
 
