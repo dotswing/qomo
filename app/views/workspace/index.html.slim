@@ -13,6 +13,7 @@
             - for tool in group.tools
               li
                 a.tool-link data-tid=tool.id href=box_tool_path(tool) = tool.title
+                a.tool-help data-tid=tool.id data-title=tool.title href=help_tool_path(tool) ?
 
 
 .center.qpanel.ui-layout-center

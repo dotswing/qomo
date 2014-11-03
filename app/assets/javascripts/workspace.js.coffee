@@ -442,6 +442,17 @@ within 'workspace', ->
 
       return false
 
+
+    $('.tool-groups a.tool-help').click ->
+      dia = dialog
+        title: "Help: #{$(this).data 'title'}"
+        width: 500
+      dia.show()
+      $.get this.href, (data) ->
+        dia.content data
+      return false
+
+
     $('a.run').click ->
       $.post this.href,
           boxes: localStorage.boxes

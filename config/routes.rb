@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     get :mark_public
   end
 
+
   resources :pipelines do
     collection do
       get 'my'
@@ -77,6 +78,7 @@ Rails.application.routes.draw do
     end
 
     member do
+      get 'help'
       get 'box'
       get 'box/:bid', action: 'box'
     end

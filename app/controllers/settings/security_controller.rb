@@ -2,6 +2,7 @@ class Settings::SecurityController < Settings::ApplicationController
 
   def edit
     @user = current_user
+    render layout: 'settings'
   end
 
 

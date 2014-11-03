@@ -8,7 +8,7 @@ class Settings::ProfilesController < Settings::ApplicationController
 
   def update
     current_user.update params.require(:user).permit!
-    redirect_to action: 'edit', layout: 'settings'
+    redirect_to action: 'edit'
   end
 
 

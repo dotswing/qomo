@@ -83,4 +83,10 @@ class ToolsController < ApplicationController
     @tool = Tool.find params['id']
   end
 
+
+  def help
+    @tool = Tool.find params['id']
+    render layout: nil
+  end
+
 end
