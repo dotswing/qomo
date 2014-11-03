@@ -15,7 +15,7 @@
       - for pipeline in @pipelines
         tr
           td
-            a.pipeline-info href=pipeline_path(pipeline)
+            a href=pipeline_path(pipeline)
               = pipeline.title
           td = user_tag pipeline.owner
           td = pipeline.updated_at.to_s(:db)

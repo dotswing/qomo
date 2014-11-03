@@ -15,7 +15,9 @@
 
       - for pipeline in @pipelines
         tr data-pid=pipeline.id
-          td = pipeline.title
+          td
+            a href=pipeline_path(pipeline)
+              = pipeline.title
           td = pipeline.updated_at.to_s(:db)
           td
             input.mark type='checkbox' checked=pipeline.public data-url=mark_public_pipeline_path(pipeline)

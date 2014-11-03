@@ -19,12 +19,3 @@ within 'pipelines', ->
         dia.showModal()
 
     return false
-
-  $('.pipeline-info').click ->
-    dia = dialog
-      title: "Pipeline: #{$(this).text()}"
-      width: 600
-    dia.show()
-    $.get this.href, (data) ->
-      dia.content data
-    return false

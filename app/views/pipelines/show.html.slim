@@ -1,8 +1,21 @@
-p == @pipeline.desc
-p
-  strong Please cite:
-  br
-  ' #{@pipeline.owner.full_name} (#{@pipeline.created_at.strftime '%Y'}) Pipeline: "#{@pipeline.title}" in Qomo paltform,
-  ' available at
-  em> = pipeline_url(@pipeline)
-  ' (Last update: #{@pipeline.updated_at.strftime '%b %d, %Y'}).
+- content_for :content
+  h2.title
+    | Pipeline: #{@pipeline.title}
+    - if @pipeline.public
+      span.ui.red.label Public
+
+  .actions
+    a.load href=workspace_load_pipeline_path(@pipeline) Load
+    a.merge href=workspace_merge_pipeline_path(@pipeline) Merge
+    - if @pipeline.owner == current_user
+      a.edit href=edit_pipeline_path(@pipeline) Edit
+
+  p
+    | Owner: #{user_tag @pipeline.owner}
+
+  p == @pipeline.desc
+
+  p
+    strong Please cite:
+    br
+    == pipeline_ref(@pipeline)

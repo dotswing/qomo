@@ -15,7 +15,7 @@ class PipelinesController < ApplicationController
   def show
     @pipeline = Pipeline.find params['id']
     respond_to do |format|
-      format.html { render layout: nil }
+      format.html
       format.json { render json: @pipeline }
     end
   end
