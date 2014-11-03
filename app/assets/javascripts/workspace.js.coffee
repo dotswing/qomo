@@ -233,14 +233,16 @@ init_box = (box_html, bid, position)->
             width: 700
             okValue: 'OK'
             ok: ->
-              value = window.filetree.get_selected(false).join(' ')
+              value = $(document.getElementById("content:#{did}")).find('.path').val()
               _this.val value
               _this.trigger 'change'
               return true
             cancelValue: 'Cancel'
             cancel: ->
+          $(document.getElementById("content:#{did}")).find('.path').val _this.val()
           dia.showModal()
-          window.filetree = $.jstree.create document.getElementById("content:#{did}"),
+
+          $(document.getElementById("content:#{did}")).find('.tree').jstree(
             core:
               animation: 0
               themes:
@@ -250,6 +252,8 @@ init_box = (box_html, bid, position)->
                   '/datastore/index.json'
                 data: (node) ->
                   'dir' : node.id
+          ).on 'changed.jstree', (je, e) ->
+            $(document.getElementById("content:#{did}")).find('.path').val e.selected.join(' ')
 
 
       $(this).change ->
