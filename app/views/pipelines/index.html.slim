@@ -14,7 +14,9 @@
       = empty_row @pipelines, 4
       - for pipeline in @pipelines
         tr
-          td = pipeline.title
+          td
+            a.pipeline-info href=pipeline_path(pipeline)
+              = pipeline.title
           td = user_tag pipeline.owner
           td = pipeline.updated_at.to_s(:db)
           td

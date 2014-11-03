@@ -1,0 +1,8 @@
+p == @pipeline.desc
+p
+  strong Please cite:
+  br
+  ' #{@pipeline.owner.full_name} (#{@pipeline.created_at.strftime '%Y'}) Pipeline: "#{@pipeline.title}" in Qomo paltform,
+  ' available at
+  em> = pipeline_url(@pipeline)
+  ' (Last update: #{@pipeline.updated_at.strftime '%b %d, %Y'}).
