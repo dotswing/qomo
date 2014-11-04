@@ -3,6 +3,7 @@ class DatastoreController < ApplicationController
   def index
     @dir = params['dir'] || ''
     @dir = '' if @dir == '#'
+    @dir = @dir[1..-1] if @dir.start_with? '/'
 
     @files = hdfs.uls uid, @dir
 
