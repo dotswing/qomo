@@ -1,18 +1,28 @@
 defaults: &defaults
   home: /home/qomo
+  #home: /Users/dotswing/qomo
+  host: http://cloud.big.ac.cn/
   admin:
     username: dotswing
     email: xuxingjian@cbb.big.ac.com
   hdfs:
-    host: host1
-    user: qomo
-    port: 14000
+    url: hdfs://host1.internal.cbb.big.ac.cn:8020
     root: /qomo_<%= Rails.env %>
-  job:
+    local: /hdfs_fuse
+    web:
+      host: host1
+      user: qomo
+      port: 14000
+
+  lib:
     streaming: hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar
     common: qomo-common-0.0.1-SNAPSHOT.jar
+  hadoop:
+    bin: /usr/bin/hadoop
+
   engine:
     url: http://host2:7020/jsonrpc
+
 
 development:
   <<: *defaults
