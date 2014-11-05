@@ -10,6 +10,7 @@
 
 /config/settings.yml
 /config/database.yml
+/config/intializers/devise.rb
 
 /public/assets
 

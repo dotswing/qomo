@@ -1,3 +1,7 @@
+vam 'semantic', github: 'Semantic-Org/Semantic-UI' do
+  local 'build/packaged'
+end
+
 vam 'jquery', '2.1.1' do
   url "http://code.jquery.com/jquery-#{@version}.js", main: true
 end
@@ -57,10 +61,6 @@ end
 
 vam 'fine-uploader', version: '5.0.6' do
   url "http://fineuploader.com/source/all.fineuploader-#{@version}.min.js", main: true
-end
-
-vam 'semantic', github: 'Semantic-Org/Semantic-UI' do
-  local 'build/packaged'
 end
 
 vam 'jstree' do
