@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Core components
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.7'
 
 # Views and frontend
 gem 'sass-rails'
