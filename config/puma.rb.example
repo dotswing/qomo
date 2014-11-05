@@ -7,12 +7,12 @@ directory root
 
 environment 'production'
 
-worker 4
+workers 4
 threads 10, 20
 
-pidfile "#{root}/tmp/puma/server.pid"
-state_path "#{root}/tmp/puma/server.state"
-bind "unix://#{root}/tmp/puma/server.sock"
+pidfile "#{root}/tmp/server.pid"
+state_path "#{root}/tmp/server.state"
+bind "unix://#{root}/tmp/server.sock"
 
 stdout_redirect "#{root}/log/stdout", "#{root}/log/stderr"
 
