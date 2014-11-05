@@ -9,7 +9,7 @@ class JobsController < ApplicationController
       j['units'].each do |u|
         u['title'] = Tool.find(u['tid']).title
 
-        all_success = false unless u['status'] ==  'SUCCESS'
+        all_success = (u['status'] ==  'SUCCESS')
       end
     end
 

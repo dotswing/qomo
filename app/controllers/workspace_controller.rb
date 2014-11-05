@@ -57,7 +57,12 @@ class WorkspaceController < ApplicationController
     dg=RGL::DirectedAdjacencyGraph.new
     conns.each do |e|
       dg.add_edge e['sourceId'], e['targetId']
-      boxes[e['targetId']]['values'][e['targetParamName']] = boxes[e['sourceId']]['values'][e['sourceParamName']]
+
+      if boxes[e['targetId']]['values'][e['targetParamName']].blank?
+        boxes[e['targetId']]['values'][e['targetParamName']] = boxes[e['sourceId']]['values'][e['sourceParamName']]
+      else
+        boxes[e['targetId']]['values'][e['targetParamName']] += ",#{boxes[e['sourceId']]['values'][e['sourceParamName']]}"
+      end
     end
 
     #Generate commands
@@ -78,7 +83,7 @@ class WorkspaceController < ApplicationController
           if e['name'] == ka
             case e['type']
               when 'input'
-                va = va.split ' '
+                va = va.split ','
                 va = va.collect do |ev|
                   if ev.start_with? '@'
                     username = ev[1, ev.index(':')-1]
@@ -115,6 +120,7 @@ class WorkspaceController < ApplicationController
       ordere_units = ordere_units.collect {|e| units[e]}
     end
 
+    pp ordere_units
     engine.job_submit uid, jid, MultiJson.encode(ordere_units)
 
     render json: {success: true}
