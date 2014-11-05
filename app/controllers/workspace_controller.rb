@@ -78,13 +78,19 @@ class WorkspaceController < ApplicationController
           if e['name'] == ka
             case e['type']
               when 'input'
-                if va.start_with? '@'
-                  username = va[1, va.index(':')-1]
-                  user = User.find_by username: username
-                  va = hdfs.uapath user.id, va[va.index(':')+1 .. -1]
-                else
-                  va = hdfs.uapath uid, va
+                va = va.split ' '
+                va = va.collect do |ev|
+                  if ev.start_with? '@'
+                    username = ev[1, ev.index(':')-1]
+                    user = User.find_by username: username
+                    ev = hdfs.uapath user.id, ev[ev.index(':')+1 .. -1]
+                  else
+                    ev = hdfs.uapath uid, ev
+                  end
+                  ev
                 end
+
+                va = va.join ','
 
               when 'output'
                 va = hdfs.uapath uid, va

@@ -11,6 +11,7 @@ namespace :qomo do
           tools = tools['tool']
         end
 
+        tools = [tools] unless tools.is_a? Array
         tools.each do |t|
           Tool.transaction do
             if t.is_a? Array
