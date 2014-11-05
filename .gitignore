@@ -10,6 +10,8 @@
 
 /config/settings.yml
 /config/database.yml
+/config/secrets.yml
+/config/puma.rb
 /config/intializers/devise.rb
 
 /public/assets

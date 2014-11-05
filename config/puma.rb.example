@@ -1,0 +1,19 @@
+#!/usr/bin/env puma
+
+app_name = 'qomo'
+root = "/home/#{app_name}/#{app_name}/current"
+
+directory root
+
+environment 'production'
+
+worker 4
+threads 10, 20
+
+pidfile "#{root}/tmp/puma/server.pid"
+state_path "#{root}/tmp/puma/server.state"
+bind "unix://#{root}/tmp/puma/server.sock"
+
+stdout_redirect "#{root}/log/stdout", "#{root}/log/stderr"
+
+preload_app!
