@@ -22,7 +22,7 @@ vam 'jquery-layout', 'latest' do
   url "http://layout.jquery-dev.net/lib/js/jquery.layout-#{@version}.js", main: true
 end
 
-vam 'jquery-jsPlumb', '1.6.4' do
+vam 'jquery-jsPlumb', '1.7.2' do
   url "http://jsplumbtoolkit.com/js/jquery.jsPlumb-#{@version}.js", main: true
 end
 
