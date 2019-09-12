@@ -19,7 +19,7 @@ gem 'awesome_nested_set'
 
 # Security
 gem 'bcrypt'
-gem 'devise', '3.2.4'
+gem 'devise', '4.7.1'
 gem 'cancancan'
 
 # Application server
